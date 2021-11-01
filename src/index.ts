@@ -10,10 +10,7 @@ import config from "./config/";
 import auth from "./config/auth";
 
 export const client = new Client({
-    intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
-    ],
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
     ws: { properties: { $browser: browser } },
 });
 
@@ -25,6 +22,8 @@ client.on("ready", async () => {
 
     console.log("Setting activity...");
     client.user?.setActivity(config.activity);
+
+    console.log("Done!")
 });
 
 client.login(auth.discord.token);
