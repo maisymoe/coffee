@@ -1,0 +1,26 @@
+{
+  "name": "coffee",
+  "version": "0.0.1",
+  "description": "Beef's personal Discord bot.",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc && node dist/src/index.js",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Beefers/coffee.git"
+  },
+  "author": "Beef",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Beefers/coffee/issues"
+  },
+  "homepage": "https://github.com/Beefers/coffee#readme",
+  "devDependencies": {
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "discord.js": "^13.3.0"
+  }
+}
