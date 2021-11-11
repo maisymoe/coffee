@@ -1,11 +1,11 @@
 lockfileVersion: 5.3
 
 specifiers:
-  discord.js: ^13.3.0
+  discord.js: ^13.3.1
   typescript: ^4.4.4
 
 dependencies:
-  discord.js: 13.3.0
+  discord.js: 13.3.1
 
 devDependencies:
   typescript: 4.4.4
@@ -34,11 +34,11 @@ packages:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
-      mime-types: 2.1.33
+      mime-types: 2.1.34
     dev: false
 
-  /@sapphire/async-queue/1.1.8:
-    resolution: {integrity: sha512-Oi4EEi8vOne8RM1tCdQ3kYAtl/J6ztak3Th6wwGFqA2SVNJtedw196LjsLX0bK8Li8cwaljbFf08N+0zeqhkWQ==}
+  /@sapphire/async-queue/1.1.9:
+    resolution: {integrity: sha512-CbXaGwwlEMq+l1TRu01FJCvySJ1CEFKFclHT48nIfNeZXaAAmmwwy7scUKmYHPUa3GhoMp6Qr1B3eAJux6XgOQ==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
     dev: false
 
@@ -50,18 +50,18 @@ packages:
   /@types/node-fetch/2.5.12:
     resolution: {integrity: sha512-MKgC4dlq4kKNa/mYrwpKfzQMB5X3ee5U6fSprkKpToBqBmX4nFZL9cW5jl6sWn+xpRJ7ypWh2yyqqr8UUCstSw==}
     dependencies:
-      '@types/node': 16.11.6
+      '@types/node': 16.11.7
       form-data: 3.0.1
     dev: false
 
-  /@types/node/16.11.6:
-    resolution: {integrity: sha512-ua7PgUoeQFjmWPcoo9khiPum3Pd60k4/2ZGXt18sm2Slk0W0xZTqt5Y0Ny1NyBiN1EVQ/+FaF9NcY4Qe6rwk5w==}
+  /@types/node/16.11.7:
+    resolution: {integrity: sha512-QB5D2sqfSjCmTuWcBWyJ+/44bcjO7VbjSbOE0ucoVbAsSNQc4Lt6QkgkVXkTDwkL4z/beecZNDvVX15D4P8Jbw==}
     dev: false
 
   /@types/ws/8.2.0:
     resolution: {integrity: sha512-cyeefcUCgJlEk+hk2h3N+MqKKsPViQgF5boi9TTHSK+PoR9KWBb/C5ccPcDyAqgsbAYHTwulch725DV84+pSpg==}
     dependencies:
-      '@types/node': 16.11.6
+      '@types/node': 16.11.7
     dev: false
 
   /asynckit/0.4.0:
@@ -90,14 +90,14 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /discord.js/13.3.0:
-    resolution: {integrity: sha512-kZcDVrQRTuzjRx99/Xl9HF1Kt7xNkiN4Gwvk1hNmLRAn+7Syzw9XTkQZdOPXLpijhbTNsZcdAaMxgvTmtyNdyA==}
+  /discord.js/13.3.1:
+    resolution: {integrity: sha512-zn4G8tL5+tMV00+0aSsVYNYcIfMSdT2g0nudKny+Ikd+XKv7m6bqI7n3Vji0GIRqXDr5ArPaw+iYFM2I1Iw3vg==}
     engines: {node: '>=16.6.0', npm: '>=7.0.0'}
     dependencies:
       '@discordjs/builders': 0.8.2
       '@discordjs/collection': 0.3.2
       '@discordjs/form-data': 3.0.1
-      '@sapphire/async-queue': 1.1.8
+      '@sapphire/async-queue': 1.1.9
       '@types/node-fetch': 2.5.12
       '@types/ws': 8.2.0
       discord-api-types: 0.24.0
@@ -121,7 +121,7 @@ packages:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
-      mime-types: 2.1.33
+      mime-types: 2.1.34
     dev: false
 
   /is-obj/2.0.0:
@@ -133,16 +133,16 @@ packages:
     resolution: {integrity: sha1-QVxEePK8wwEgwizhDtMib30+GOA=}
     dev: false
 
-  /mime-db/1.50.0:
-    resolution: {integrity: sha512-9tMZCDlYHqeERXEHO9f/hKfNXhre5dK2eE/krIvUjZbS2KPcqGDfNShIWS1uW9XOTKQKqK6qbeOci18rbfW77A==}
+  /mime-db/1.51.0:
+    resolution: {integrity: sha512-5y8A56jg7XVQx2mbv1lu49NR4dokRnhZYTtL+KGfaa27uq4pSTXkwQkFJl4pkRMyNFz/EtYDSkiiEHx3F7UN6g==}
     engines: {node: '>= 0.6'}
     dev: false
 
-  /mime-types/2.1.33:
-    resolution: {integrity: sha512-plLElXp7pRDd0bNZHw+nMd52vRYjLwQjygaNg7ddJ2uJtTlmnTCjWuPKxVu6//AdaRuME84SvLW91sIkBqGT0g==}
+  /mime-types/2.1.34:
+    resolution: {integrity: sha512-6cP692WwGIs9XXdOO4++N+7qjqv0rqxxVvJ3VHPh/Sc9mVZcQP+ZGhkKiTvWMQRr2tbHkJP/Yn7Y0npb3ZBs4A==}
     engines: {node: '>= 0.6'}
     dependencies:
-      mime-db: 1.50.0
+      mime-db: 1.51.0
     dev: false
 
   /node-fetch/2.6.6:

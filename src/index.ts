@@ -1,7 +1,6 @@
 import { Client, Intents } from "discord.js";
 
-const browser =
-    process.platform === "android" ? "Discord Android" : "discord.js";
+const browser = "Discord Android";
 import commandHandler from "./handlers/commandHandler";
 import interactionHandler from "./handlers/interactionHandler";
 import componentHandler from "./handlers/componentHandler";
@@ -17,13 +16,13 @@ export const client = new Client({
 client.on("ready", async () => {
     console.log("Client is ready, initialising handlers...");
     await commandHandler();
-    await componentHandler();
+    // await componentHandler();
     await interactionHandler();
 
     console.log("Setting activity...");
     client.user?.setActivity(config.activity);
 
-    console.log("Done!")
+    console.log("Done!");
 });
 
 client.login(auth.discord.token);
