@@ -3,8 +3,6 @@ import {
     ApplicationCommandType,
     ActivityOptions,
     Interaction,
-    ButtonInteraction,
-    SelectMenuInteraction,
 } from "discord.js";
 
 export interface AuthOptions {
@@ -50,8 +48,9 @@ export interface CommandOptions {
     description?: string;
     category: string;
     options?: ApplicationCommandOptionData[];
-    type?: ApplicationCommandType;
-    ephemeral?: boolean;
+    type?: ApplicationCommandType | "CHAT_INPUT";
+    ephemeral?: true;
+    su?: true;
     execute(interaction: Interaction): any;
 }
 
@@ -60,9 +59,9 @@ export class Command {
     public description?: string;
     public category: string;
     public options?: ApplicationCommandOptionData[];
-    public type?: ApplicationCommandType;
-    public ephemeral?: boolean;
-
+    public type?: ApplicationCommandType | "CHAT_INPUT";
+    public ephemeral?: true;
+    public su?: true;
     public execute: (interaction: Interaction) => any;
 
     public constructor(commandOptions: CommandOptions) {
@@ -72,42 +71,7 @@ export class Command {
         this.options = commandOptions.options;
         this.type = commandOptions.type;
         this.ephemeral = commandOptions.ephemeral;
+        this.su = commandOptions.su;
         this.execute = commandOptions.execute;
-    }
-}
-
-export interface ButtonOptions {
-    id: string;
-    ephemeral?: boolean;
-    execute: (interaction: ButtonInteraction) => any;
-}
-
-export class Button {
-    public id: string;
-    public ephemeral?: boolean;
-    public execute: (interaction: ButtonInteraction) => any;
-
-    public constructor(buttonOptions: ButtonOptions) {
-        this.id = buttonOptions.id;
-        this.ephemeral = buttonOptions.ephemeral;
-        this.execute = buttonOptions.execute;
-    }
-}
-
-export interface SelectMenuOptions {
-    id: string;
-    ephemeral?: boolean;
-    execute: (interaction: SelectMenuInteraction) => any;
-}
-
-export class SelectMenu {
-    public id: string;
-    public ephemeral?: boolean;
-    public execute: (interaction: SelectMenuInteraction) => any;
-
-    public constructor(selectMenuOptions: SelectMenuOptions) {
-        this.id = selectMenuOptions.id;
-        this.ephemeral = selectMenuOptions.ephemeral;
-        this.execute = selectMenuOptions.execute;
     }
 }

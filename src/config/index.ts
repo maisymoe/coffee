@@ -6,5 +6,6 @@ export default new Config({
     users: ["257109471589957632"],
     activity: {
         name: `being coffee. | ${meta.version}`,
+        type: "COMPETING"
     },
 });
