@@ -5,6 +5,7 @@ import { createErrorEmbed } from "../lib/embeds";
 import { reportError } from "../lib/common";
 
 import { commands } from "./commandHandler";
+import config from "../config";
 
 export default async function init() {
     client.on("interactionCreate", async(interaction: Interaction) => {
@@ -17,11 +18,16 @@ export default async function init() {
             await interaction.deferReply();
         }
 
+        if (command!.su && !config.users.includes(interaction.user.id)) {
+            await interaction.editReply({ embeds: [await createErrorEmbed("Missing permissions", `${interaction.user.username} is not in the sudoers file. This incident will be reported.` )] });
+            return;
+        }
+
         try {
             await command!.execute(interaction);
         } catch (error: Error | any) {
             const errorMessage = `An error occurred when handling an interaction created by ${interaction.user.username}#${interaction.user.discriminator} (${interaction.user.id}), calling command ${interaction.commandName}:`
-            reportError(errorMessage, error);
+            await reportError(errorMessage, error);
 
             await interaction.editReply({
                 embeds: [await createErrorEmbed("Interaction handler threw an exception...", "This error has been automatically reported.")],

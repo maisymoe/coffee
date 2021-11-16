@@ -6,6 +6,7 @@ export default new Command({
     name: "test",
     description: "test",
     category: "test",
+    su: true,
     // options: [
     //     {
     //         name: "autocomplete",
@@ -24,7 +25,7 @@ export default new Command({
     //     },
     // ],
     async execute(interaction: CommandInteraction): Promise<any> {
-        throw new Error("Please show me traces");
+        interaction.editReply({ content: "You used the permission-locked command!!!!" })
         // return await interaction.editReply({
         //     content: `I am ${client.user?.username}, and you chose ${interaction.options.getString("autocomplete")}`,
         // });
