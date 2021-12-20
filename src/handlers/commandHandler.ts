@@ -21,14 +21,13 @@ export default async function init() {
         }
     }
 
+    for (const id of config.servers) {
+        await (await client.guilds.fetch(id))?.commands.set(JSON.parse(JSON.stringify(commands)));
+    }
+
     console.log(
-        `Successfully fetched ${
-            Array.from(commands.values()).length
-        } command(s).`
+        `Successfully fetched ${commands.length} command(s), and registered them in ${config.servers.length} server(s).`
     );
 
-    for (const id of config.servers) {
-        client.guilds.cache.get(id)?.commands.set(JSON.parse(JSON.stringify(commands)));
-    }
     console.log(`Command handler initialised. Took ${Date.now() - before}ms.`);
 }

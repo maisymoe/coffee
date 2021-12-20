@@ -10,6 +10,7 @@ import auth from "./config/auth";
 export const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
     ws: { properties: { $browser: browser } },
+    http: { api: "https://canary.discord.com/api" },
 });
 
 client.on("ready", async () => {
