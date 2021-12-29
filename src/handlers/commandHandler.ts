@@ -21,8 +21,11 @@ export default async function init() {
         }
     }
 
-    for (const id of config.servers) {
-        await (await client.guilds.fetch(id))?.commands.set(JSON.parse(JSON.stringify(commands)));
+    const globalCommands = commands.filter(i => !i.servers);
+
+    for (const server of config.servers) {
+        const serverCommands = globalCommands.concat(commands.filter(i => { i.servers?.includes(server.alias || server.id) }));
+        await (await client.guilds.fetch(server.id))?.commands.set(JSON.parse(JSON.stringify(serverCommands)));
     }
 
     console.log(

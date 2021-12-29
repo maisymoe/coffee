@@ -1,8 +1,17 @@
-import { Config } from "../lib/def";
+import { Config, Server } from "../lib/def";
 import meta from "../../package.json";
 
 export default new Config({
-    servers: ["829798084207706152", "824921608560181258"],
+    servers: [
+        new Server({
+            id: "829798084207706152",
+            alias: "molten",
+        }),
+        new Server({
+            id: "824921608560181258",
+            alias: "cumcord",
+        }),
+    ],
     users: ["257109471589957632"],
     activity: {
         name: `being coffee. | ${meta.version}`,

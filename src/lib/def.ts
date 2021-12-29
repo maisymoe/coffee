@@ -26,13 +26,13 @@ export class Auth {
 }
 
 export interface ConfigOptions {
-    servers: string[];
+    servers: Server[];
     users: string[];
     activity: ActivityOptions;
 }
 
 export class Config {
-    public servers: string[];
+    public servers: Server[];
     public users: string[];
     public activity: ActivityOptions;
 
@@ -43,12 +43,28 @@ export class Config {
     }
 }
 
+export interface ServerOptions {
+    id: string;
+    alias: string;
+}
+
+export class Server {
+    public id: string;
+    public alias: string;
+
+    public constructor(serverOptions: ServerOptions) {
+        this.id = serverOptions.id;
+        this.alias = serverOptions.alias;
+    }
+}
+
 export interface CommandOptions {
     name: string;
     description?: string;
     category: string;
     options?: ApplicationCommandOptionData[];
     type?: ApplicationCommandType | "CHAT_INPUT";
+    servers?: string[];
     ephemeral?: true;
     su?: true;
     execute(interaction: Interaction): any;
@@ -60,6 +76,7 @@ export class Command {
     public category: string;
     public options?: ApplicationCommandOptionData[];
     public type?: ApplicationCommandType | "CHAT_INPUT";
+    public servers?: string[];
     public ephemeral?: true;
     public su?: true;
     public execute: (interaction: Interaction) => any;
@@ -70,6 +87,7 @@ export class Command {
         this.category = commandOptions.category;
         this.options = commandOptions.options;
         this.type = commandOptions.type;
+        this.servers = commandOptions.servers;
         this.ephemeral = commandOptions.ephemeral;
         this.su = commandOptions.su;
         this.execute = commandOptions.execute;
