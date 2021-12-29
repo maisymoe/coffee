@@ -3,6 +3,13 @@ import {
     ApplicationCommandType,
     ActivityOptions,
     Interaction,
+    TextChannel,
+    NewsChannel,
+    GuildChannel,
+    DMChannel,
+    Channel,
+    Guild,
+    GuildMember,
 } from "discord.js";
 
 export interface AuthOptions {
