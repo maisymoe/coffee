@@ -21,7 +21,6 @@ export default new Command({
         let result;
 
         try {
-            // TODO: proper scoping
             result = eval(code!);
             let took = Date.now() - before;
 
@@ -35,7 +34,7 @@ export default new Command({
                 );
 
             return await interaction.editReply({ embeds: [embed] });
-        } catch (error: any) {
+        } catch (error: Error | any) {
             return await interaction.editReply({ embeds: [await createErrorEmbed("Eval", "I couldn\'t evaluate that! Here's the error.", [ { name: "\u200B", value: `\`\`\`js\n${error.stack ? error.stack : error.toString()}\`\`\`` } ], "can't code? seems like a skill issue to me!")] });
         }
     },

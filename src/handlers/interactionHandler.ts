@@ -7,7 +7,7 @@ import { reportError } from "../lib/common";
 import { commands } from "./commandHandler";
 import config from "../config";
 
-export default async function init() {
+export default async () => {
     client.on("interactionCreate", async(interaction: Interaction) => {
         if (!interaction.isCommand()) return;
         const command: Command | undefined = commands.find(i => i.name === interaction.commandName);

@@ -7,7 +7,7 @@ import { Command } from "../lib/def";
 
 export const commands = new Array<Command>();
 
-export default async function init() {
+export default async () => {
     const before = Date.now();
     const commandFolder = join(__dirname, "../", "commands/");
     const commandFolders = readdirSync(commandFolder);
