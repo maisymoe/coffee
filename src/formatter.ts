@@ -1,5 +1,6 @@
-import {VM as CVM, run, libBasic} from "cumlisp"
-import {VMContext, installDiscord} from "./formatter/lib-discord"
+import { VM as CVM, run, libBasic } from "cumlisp";
+import { VMContext, installDiscord } from "./formatter/lib-discord";
+import { installCoffee } from "./formatter/lib-coffee";
 
 // This file serves as a wrapper to minimize the used API of the formatter.
 
@@ -10,8 +11,9 @@ export class VM extends CVM {
     public constructor(context: VMContext) {
         super();
         this.context = context;
-        libBasic.installBasic(this)
-        installDiscord(this, context)
+        libBasic.installBasic(this);
+        installDiscord(this, context);
+        installCoffee(this, context);
     }
 }
 
