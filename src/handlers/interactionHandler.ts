@@ -8,6 +8,8 @@ import { commands } from "./commandHandler";
 import config from "../config";
 
 export default async () => {
+    const before = Date.now();
+
     client.on("interactionCreate", async(interaction: Interaction) => {
         if (!interaction.isCommand()) return;
         const command: Command | undefined = commands.find(i => i.name === interaction.commandName);
@@ -34,4 +36,6 @@ export default async () => {
             });
         }
     })
+
+    console.log(`Interaction handler initialised. Took ${Date.now() - before}ms.`);
 }
