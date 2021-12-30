@@ -1,5 +1,5 @@
 import { CommandInteraction, MessageOptions } from "discord.js"
-import {VM, VMContext, run} from "../../formatter"
+import { VM, VMContext, run } from "../../formatter"
 import { client } from "../../index"
 import { Command } from "../../lib/def"
 import { TextBasedChannel } from "../../lib/discord"
@@ -25,7 +25,7 @@ export async function say(code: string, vmContext: VMContext): Promise<SayResult
   const opts: MessageOptions & { split: false } = { split: false };
   let hasMeta = false;
 
-  if ((text != '') || hasMeta)
+  if ((text != "") || hasMeta)
     return {
       error: false,
       text,
