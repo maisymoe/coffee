@@ -17,7 +17,7 @@ export default new Command({
     su: true,
     async execute(interaction: CommandInteraction): Promise<any> {
         const code = interaction.options.getString("code");
-        let before = Date.now();
+        const before = Date.now();
         let result;
 
         try {
@@ -35,7 +35,7 @@ export default new Command({
 
             return await interaction.editReply({ embeds: [embed] });
         } catch (error: Error | any) {
-            return await interaction.editReply({ embeds: [await createErrorEmbed("Eval", "I couldn\'t evaluate that! Here's the error.", [ { name: "\u200B", value: `\`\`\`js\n${error.stack ? error.stack : error.toString()}\`\`\`` } ], "can't code? seems like a skill issue to me!")] });
+            return await interaction.editReply({ embeds: [await createErrorEmbed("Eval", "I couldn\'t evaluate that! Here\'s the error.", [ { name: "\u200B", value: `\`\`\`js\n${error.stack ? error.stack : error.toString()}\`\`\`` } ], "can\'t code? seems like a skill issue to me!")] });
         }
     },
 });
