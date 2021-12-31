@@ -1,0 +1,8 @@
+{
+    "formatter": {
+        "json-test": {
+            "description": "A test command.",
+            "format": "Hi from JSON commands!"
+        }
+    }
+}

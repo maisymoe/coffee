@@ -10,6 +10,7 @@ import {
     Channel,
     Guild,
     GuildMember,
+    MessageEmbedOptions,
 } from "discord.js";
 
 export interface AuthOptions {
@@ -100,3 +101,14 @@ export class Command {
         this.execute = commandOptions.execute;
     }
 }
+
+// JSON Commands {{{
+export interface JSONCommand {
+    description?: string;
+    format?: string;
+    embed?: MessageEmbedOptions;
+}
+export interface JSONCommandFile {
+    [categoryName: string]: Record<string, JSONCommand>;
+}
+// }}}

@@ -12,7 +12,7 @@ export default new Config({
             alias: "cumcord",
         }),
     ],
-    users: ["257109471589957632"],
+    users: ["257109471589957632", "465702500146610176"],
     activity: {
         name: `being coffee. | ${meta.version}`,
         type: "COMPETING"
