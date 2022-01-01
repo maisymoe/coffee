@@ -13,59 +13,6 @@ import {
     MessageEmbedOptions,
 } from "discord.js";
 
-export interface AuthOptions {
-    discord: {
-        token: string;
-        clientId: string;
-        publicKey: string;
-    };
-}
-
-export class Auth {
-    public discord: {
-        token: string;
-        clientId: string;
-        publicKey: string;
-    };
-
-    public constructor(authOptions: AuthOptions) {
-        this.discord = authOptions.discord;
-    }
-}
-
-export interface ConfigOptions {
-    servers: Server[];
-    users: string[];
-    activity: ActivityOptions;
-}
-
-export class Config {
-    public servers: Server[];
-    public users: string[];
-    public activity: ActivityOptions;
-
-    public constructor(configOptions: ConfigOptions) {
-        this.servers = configOptions.servers;
-        this.users = configOptions.users;
-        this.activity = configOptions.activity;
-    }
-}
-
-export interface ServerOptions {
-    id: string;
-    alias: string;
-}
-
-export class Server {
-    public id: string;
-    public alias: string;
-
-    public constructor(serverOptions: ServerOptions) {
-        this.id = serverOptions.id;
-        this.alias = serverOptions.alias;
-    }
-}
-
 export interface CommandOptions {
     name: string;
     description?: string;
@@ -111,3 +58,16 @@ export interface JSONCommand {
 export interface CommandGroup {[command: string]: JSONCommand}
 export interface CommandSet {[category: string]: CommandGroup}
 // }}}
+
+// Config {{{
+export interface Server {
+    id: string;
+    alias: string;
+}
+
+export interface Config {
+    servers?: Server[];
+    users?: string[];
+    activity?: ActivityOptions;
+}
+/// }}}

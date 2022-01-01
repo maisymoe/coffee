@@ -5,7 +5,6 @@ import { createErrorEmbed } from "../lib/embeds";
 import { reportError } from "../lib/common";
 
 import { commands } from "./commandHandler";
-import config from "../config";
 
 export default async () => {
     const before = Date.now();
@@ -20,7 +19,7 @@ export default async () => {
             await interaction.deferReply();
         }
 
-        if (command!.su && !config.users.includes(interaction.user.id)) {
+        if (command!.su && !client.dynamicData.config.data.users!.includes(interaction.user.id)) {
             await interaction.editReply({ embeds: [await createErrorEmbed("Missing permissions", `${interaction.user.username} is not in the sudoers file. This incident will be reported.` )] });
             return;
         }

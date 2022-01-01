@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { CommandSet } from "./lib/def";
+import { CommandSet, Config } from "./lib/def";
 
 export abstract class DynamicTextFile {
     // Immediate access (prevents change-buffering behavior)
@@ -192,7 +192,8 @@ export class DynamicDataDump<T> extends DynamicTextFile {
 }
 
 export default class DynamicDataManager {
-    public commands = new DynamicData<CommandSet>('commands', false, true, {});
+    public config = new DynamicData<Config>("config", false, true, {})
+    public commands = new DynamicData<CommandSet>("commands", false, true, {});
 
     public initialLoad: Promise<void>;
 

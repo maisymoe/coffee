@@ -3,9 +3,10 @@ import { Client, ClientOptions, Intents } from "discord.js";
 const browser = "Discord Android";
 import commandHandler from "./handlers/commandHandler";
 import interactionHandler from "./handlers/interactionHandler";
+import { configCheck } from "./lib/common";
 
-import config from "./config/";
-import auth from "./config/auth";
+import auth from "../data/auth.json";
+
 import DynamicDataManager from "./dynamic-data";
 
 class CoffeeBot extends Client {
@@ -26,18 +27,16 @@ export const client = new CoffeeBot({
     }
 });
 
-console.log(client.dynamicData.commands)
-console.log(client.dynamicData.commands.data)
-
 client.on("ready", async () => {
+    await configCheck();
     console.log("Client is ready, initialising handlers...");
     await commandHandler();
     await interactionHandler();
 
     console.log("Setting activity...");
-    client.user?.setActivity(config.activity);
+    client.user?.setActivity(client.dynamicData.config.data.activity);
 
     console.log("Done!");
 });
 
-client.login(auth.discord.token);
+client.login(auth.token);
