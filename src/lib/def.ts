@@ -108,7 +108,6 @@ export interface JSONCommand {
     format?: string;
     embed?: MessageEmbedOptions;
 }
-export interface JSONCommandFile {
-    [categoryName: string]: Record<string, JSONCommand>;
-}
+export interface CommandGroup {[command: string]: JSONCommand}
+export interface CommandSet {[category: string]: CommandGroup}
 // }}}

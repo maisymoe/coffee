@@ -1,4 +1,4 @@
-import { Client, Intents } from "discord.js";
+import { Client, ClientOptions, Intents } from "discord.js";
 
 const browser = "Discord Android";
 import commandHandler from "./handlers/commandHandler";
@@ -6,8 +6,18 @@ import interactionHandler from "./handlers/interactionHandler";
 
 import config from "./config/";
 import auth from "./config/auth";
+import DynamicDataManager from "./dynamic-data";
 
-export const client = new Client({
+class CoffeeBot extends Client {
+    public dynamicData: DynamicDataManager;
+
+    public constructor(co: ClientOptions) {
+        super(co);
+        this.dynamicData = new DynamicDataManager();
+    }
+}
+
+export const client = new CoffeeBot({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
     ws: { properties: { $browser: browser } },
     http: { api: "https://canary.discord.com/api" },
@@ -15,6 +25,9 @@ export const client = new Client({
         parse: ["users"],
     }
 });
+
+console.log(client.dynamicData.commands)
+console.log(client.dynamicData.commands.data)
 
 client.on("ready", async () => {
     console.log("Client is ready, initialising handlers...");

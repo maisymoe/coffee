@@ -3,7 +3,7 @@ import { readdirSync } from "fs";
 
 import config from "../config";
 import { client } from "..";
-import { Command, JSONCommandFile } from "../lib/def";
+import { Command } from "../lib/def";
 import { CommandInteraction } from "discord.js";
 
 export const commands = new Array<Command>();
@@ -23,20 +23,20 @@ export default async () => {
         }
     }
 
-    const jsonCommands: JSONCommandFile = (await import("../commands/commands.json")).default;
+    const jsonCommands = client.dynamicData.commands.data;
     for (const g in jsonCommands) {
         // Maybe construct an instance of a Help command here and push that to
         // the command registry
         // also, if we actually implement categories, we can push `g` to that
         // array
-        for (const k in jsonCommands[g]) {
-            console.log(`Registering JSON command "${k}" of category "${g}"`)
+
+        for (const c in jsonCommands[g]) {
             const cmd: Command = new Command({
-                name: k,
-                description: jsonCommands[g][k].description || "No Description",
+                name: c,
+                description: jsonCommands[g][c].description || "No Description",
                 category: g,
                 execute: async (interaction: CommandInteraction) => {
-                    interaction.editReply(jsonCommands[g][k].format || "")
+                    interaction.editReply(jsonCommands[g][c].format || "")
                 }
             })
             commands.push(cmd)
