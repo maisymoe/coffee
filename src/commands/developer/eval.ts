@@ -25,7 +25,7 @@ export default new Command({
             let took = Date.now() - before;
 
             const embed = new MessageEmbed()
-                .setColor("#36393F")
+                .setColor("#2f3136")
                 .addFields(
                     { name: "Time taken", inline: true, value: `${took}ms` },
                     { name: "Type", inline: true, value: typeof result },
