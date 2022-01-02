@@ -1,17 +1,15 @@
-import { client } from "..";
+import { CoffeeBot } from "..";
 import { Interaction } from "discord.js";
 import { Command } from "../lib/def";
 import { createErrorEmbed } from "../lib/embeds";
 import { reportError } from "../lib/common";
 
-import { commands } from "./commandHandler";
-
-export default async () => {
+export default async (client: CoffeeBot) => {
     const before = Date.now();
 
     client.on("interactionCreate", async(interaction: Interaction) => {
         if (!interaction.isCommand()) return;
-        const command: Command | undefined = commands.find(i => i.name === interaction.commandName);
+        const command: Command | undefined = client.registry.commands.find(i => i.name === interaction.commandName)
 
         if (command!.ephemeral) {
             await interaction.deferReply({ ephemeral: true });

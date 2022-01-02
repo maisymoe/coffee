@@ -2,14 +2,7 @@ import {
     ApplicationCommandOptionData,
     ApplicationCommandType,
     ActivityOptions,
-    Interaction,
-    TextChannel,
-    NewsChannel,
-    GuildChannel,
-    DMChannel,
-    Channel,
-    Guild,
-    GuildMember,
+    CommandInteraction,
     MessageEmbedOptions,
 } from "discord.js";
 
@@ -22,7 +15,7 @@ export interface CommandOptions {
     servers?: string[];
     ephemeral?: true;
     su?: true;
-    execute(interaction: Interaction): any;
+    execute(interaction: CommandInteraction): any;
 }
 
 export class Command {
@@ -34,7 +27,7 @@ export class Command {
     public servers?: string[];
     public ephemeral?: true;
     public su?: true;
-    public execute: (interaction: Interaction) => any;
+    public execute: (interaction: CommandInteraction) => any;
 
     public constructor(commandOptions: CommandOptions) {
         this.name = commandOptions.name;
