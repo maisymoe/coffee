@@ -11,6 +11,8 @@ export default async (client: CoffeeBot) => {
         if (!interaction.isCommand()) return;
         const command: Command | undefined = client.registry.commands.find(i => i.name === interaction.commandName)
 
+        if (!command) { return interaction.reply({ embeds: [await createErrorEmbed("Command not found", `The command ${interaction.commandName} is invalid. Valid commands are ${client.registry.commands.map(c => { return c.name })}`)] }) }
+
         if (command!.ephemeral) {
             await interaction.deferReply({ ephemeral: true });
         } else {

@@ -3,6 +3,14 @@
         "json-test": {
             "description": "A test command.",
             "format": "Hi from JSON commands!"
+        },
+        "json-test-2": {
+            "description": "A test command 2: Electric Boogaloo.",
+            "format": "Hi from JSON commands, again!"
+        },
+        "json-test-3": {
+            "description": "A test command 3: Electric-er Boogaloo. Can you believe it?",
+            "format": "Hi from JSON commands, again, again!"
         }
     }
 }

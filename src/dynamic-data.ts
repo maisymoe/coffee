@@ -193,19 +193,19 @@ export class DynamicDataDump<T> extends DynamicTextFile {
 
 export default class DynamicDataManager {
     public config = new DynamicData<Config>("config", false, true, {})
-    public commands = new DynamicData<CommandSet>("commands", false, true, {});
+    public jsonCommands = new DynamicData<CommandSet>("commands", false, true, {});
 
     public initialLoad: Promise<void>;
 
     public constructor() {
         this.initialLoad = Promise.all<void>([
-            this.commands.initialLoad
+            this.jsonCommands.initialLoad
         ]).then(() => {});
     }
 
     public async destroy(): Promise<void> {
         await Promise.all([
-            this.commands.destroy()
+            this.jsonCommands.destroy()
         ])
     }
 }

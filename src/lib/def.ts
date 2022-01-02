@@ -5,6 +5,7 @@ import {
     CommandInteraction,
     MessageEmbedOptions,
 } from "discord.js";
+import { CoffeeBot, client } from "..";
 
 export interface CommandOptions {
     name: string;
@@ -19,6 +20,7 @@ export interface CommandOptions {
 }
 
 export class Command {
+    public client: CoffeeBot;
     public name: string;
     public description?: string;
     public category: string;
@@ -30,6 +32,7 @@ export class Command {
     public execute: (interaction: CommandInteraction) => any;
 
     public constructor(commandOptions: CommandOptions) {
+        this.client = client;
         this.name = commandOptions.name;
         this.description = commandOptions.description;
         this.category = commandOptions.category;

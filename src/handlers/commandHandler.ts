@@ -1,9 +1,17 @@
 import { join } from "path";
 import { readdirSync } from "fs";
-import { CommandInteraction } from "discord.js";
 
 import { CoffeeBot } from "..";
 import { Command } from "../lib/def";
+
+export async function submitCommands(client: CoffeeBot) {
+    const globalCommands = client.registry.commands.filter(i => !i.servers);
+
+    for (const server of client.dynamicData.config.data.servers!) {
+        const serverCommands = globalCommands.concat(client.registry.commands.filter(i => i.servers?.includes(server.alias || server.id)));
+        await (await client.guilds.fetch(server.id))?.commands.set(JSON.parse(JSON.stringify(serverCommands)));
+    }
+}
 
 export default async (client: CoffeeBot) => {
     const before = Date.now();
@@ -20,34 +28,7 @@ export default async (client: CoffeeBot) => {
         }
     }
 
-
-    // TODO: Rewrite?
-    const jsonCommands = client.dynamicData.commands.data;
-    for (const g in jsonCommands) {
-        // Maybe construct an instance of a Help command here and push that to
-        // the command registry
-        // also, if we actually implement categories, we can push `g` to that
-        // array
-    
-        for (const c in jsonCommands[g]) {
-            const command: Command = new Command({
-                name: c,
-                description: jsonCommands[g][c].description || "",
-                category: g,
-                execute: async (interaction: CommandInteraction) => {
-                    interaction.editReply(jsonCommands[g][c].format || "");
-                }
-            })
-            client.registry.registerCommand(command);
-        }
-    }
-
-    const globalCommands = client.registry.commands.filter(i => !i.servers);
-
-    for (const server of client.dynamicData.config.data.servers!) {
-        const serverCommands = globalCommands.concat(client.registry.commands.filter(i => i.servers?.includes(server.alias || server.id)));
-        await (await client.guilds.fetch(server.id))?.commands.set(JSON.parse(JSON.stringify(serverCommands)));
-    }
+    await submitCommands(client);
 
     console.log(`Command handler initialised. Took ${Date.now() - before}ms.`);
 }
