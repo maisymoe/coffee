@@ -1,4 +1,3 @@
-import {Collection} from "discord.js"
 import {CoffeeBot} from "./"
 import { Command } from "./lib/def";
 
@@ -23,4 +22,9 @@ export class CommandRegistry {
 
         return this;
     }
+
+    public unregisterCommand(command: Command) {
+        this.commands.splice(this.commands.indexOf(command))
+    }
+
 }
