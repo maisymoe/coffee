@@ -1,7 +1,6 @@
 import { Command } from "../../lib/def";
 import { CommandInteraction, MessageEmbed } from "discord.js";
 import { createErrorEmbed } from "../../lib/embeds";
-import { client } from "../..";
 
 export default new Command({
     name: "eval",
