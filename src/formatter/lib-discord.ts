@@ -1,6 +1,11 @@
 import { VM, Value, asString, falseValue, wrapFunc } from "cumlisp";
 import { Client, User } from "discord.js";
-import { findMemberByReference, queryClosestEmoteName, guildOfChannel, TextBasedChannel } from "../lib/discord";
+import {
+    findMemberByReference,
+    queryClosestEmoteName,
+    guildOfChannel,
+    TextBasedChannel,
+} from "../lib/discord";
 
 const vmFindUserTime = 128;
 
@@ -33,7 +38,7 @@ export function installDiscord(vm: VM, context: VMContext): void {
             if (res) return res.nickname || res.user.username;
             return falseValue;
         }),
-        "emote": wrapFunc("emote", 1, async (args: Value[]): Promise<Value> => {
+        emote: wrapFunc("emote", 1, async (args: Value[]): Promise<Value> => {
             const emote = queryClosestEmoteName(asString(args[0])).toString();
             if (emote) return emote;
             return falseValue;

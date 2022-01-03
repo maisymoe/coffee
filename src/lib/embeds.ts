@@ -1,6 +1,11 @@
 import { MessageEmbed, EmbedFieldData } from "discord.js";
 
-export async function createErrorEmbed(title: string, description: string, fields?: EmbedFieldData[], footer?: string): Promise<MessageEmbed> {
+export async function createErrorEmbed(
+    title: string,
+    description: string,
+    fields?: EmbedFieldData[],
+    footer?: string,
+): Promise<MessageEmbed> {
     const embed = new MessageEmbed()
         .setColor("RED")
         .setTitle(`Error - ${title}`)

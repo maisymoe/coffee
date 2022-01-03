@@ -1,9 +1,9 @@
-import { CoffeeBot } from "./"
+import { CoffeeBot } from "./";
 import { Command } from "./lib/def";
-import { CommandInteraction } from "discord.js";
+import JSONCommand from "./commands/system/json";
 
 export class CommandRegistry {
-    public client!: CoffeeBot;
+    public client: CoffeeBot;
     public commands: Array<Command>;
     private activeJSONCommands: Array<Command>;
 
@@ -15,13 +15,14 @@ export class CommandRegistry {
 
         this.client.dynamicData.jsonCommands.onModify(() => {
             this.client.registry.reloadJSONCommands();
-        })
+        });
     }
 
     public registerCommand(command: Command): CommandRegistry {
-        if (!(command instanceof Command)) throw new Error(`Invalid command object to register: ${command}`);
+        if (!(command instanceof Command))
+            throw new Error(`Invalid command object to register: ${command}`);
 
-        if (this.commands.some(cmd => cmd.name === command.name)) {
+        if (this.commands.some((cmd) => cmd.name === command.name)) {
             throw new Error(`A command with the name "${command.name}" is already registered.`);
         }
 
@@ -49,16 +50,9 @@ export class CommandRegistry {
             // the command registry
             // also, if we actually implement categories, we can push `g` to that
             // array
-        
+
             for (const c in jsonCommands[g]) {
-                const command: Command = new Command({
-                    name: c,
-                    description: jsonCommands[g][c].description || "",
-                    category: g,
-                    execute: async (interaction: CommandInteraction) => {
-                        interaction.editReply(jsonCommands[g][c].format || "");
-                    }
-                })
+                const command = new JSONCommand(this.client, g, c, jsonCommands[g][c]);
                 this.client.registry.registerCommand(command);
                 this.activeJSONCommands.push(command);
             }

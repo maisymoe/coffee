@@ -13,13 +13,19 @@ export async function configCheck() {
     }
 
     if (missingFields.length > 0) {
-        throw new Error(`You are missing the following required config fields: ${missingFields.join(", ")}`);
+        throw new Error(
+            `You are missing the following required config fields: ${missingFields.join(", ")}`,
+        );
     }
 }
 
 export async function reportError(message: string, error: Error) {
     console.log(message, error);
     for (const id of client.dynamicData.config.data.users!) {
-        await (await client.users.fetch(id)).send({ content: `${message}\n\`\`\`js\n${error.stack ? error.stack : error.toString()}\`\`\`` });
+        await (
+            await client.users.fetch(id)
+        ).send({
+            content: `${message}\n\`\`\`js\n${error.stack ? error.stack : error.toString()}\`\`\``,
+        });
     }
 }

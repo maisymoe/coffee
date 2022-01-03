@@ -1,5 +1,13 @@
-import {TextChannel, NewsChannel, DMChannel, GuildChannel, Channel, Guild, GuildMember} from "discord.js"
-import { client } from "../index"
+import {
+    TextChannel,
+    NewsChannel,
+    DMChannel,
+    GuildChannel,
+    Channel,
+    Guild,
+    GuildMember,
+} from "discord.js";
+import { client } from "../index";
 
 // Helpers for Discord stuff
 
@@ -14,7 +22,10 @@ export function isChannelTextBased(channel: Channel): channel is TextBasedChanne
 }
 
 export const mentionRegex = /<@!?([0-9]*)>/g;
-export function findMemberByReference(guild: Guild | undefined | null, reference: string): GuildMember | null {
+export function findMemberByReference(
+    guild: Guild | undefined | null,
+    reference: string,
+): GuildMember | null {
     if (!guild) return null;
 
     const mention = mentionRegex.exec(reference);
@@ -27,8 +38,13 @@ export function findMemberByReference(guild: Guild | undefined | null, reference
     //     return (cand.user.username.includes(reference)) || (reference == (`${cand.user.username}#${cand.user.discriminator}`)) || (reference == cand.user.id) || (reference == cand.nickname);
     // })
     const candidatesColl = guild.members.cache.filter((cand: GuildMember): boolean => {
-        return (cand.user.username.includes(reference)) || (reference == (`${cand.user.username}#${cand.user.discriminator}`)) || (reference == cand.user.id) || (reference == cand.nickname);
-    })
+        return (
+            cand.user.username.includes(reference) ||
+            reference == `${cand.user.username}#${cand.user.discriminator}` ||
+            reference == cand.user.id ||
+            reference == cand.nickname
+        );
+    });
     const candidates = Array.from(candidatesColl.values());
     if (candidates.length == 1) return candidates[0];
     return null;
@@ -58,10 +74,13 @@ export function compareEmoteNames(emote: string, query: string): number {
 }
 
 export function queryClosestEmoteName(query: string) {
-    const priorityTable: {[id: string]: number} = {};
+    const priorityTable: { [id: string]: number } = {};
 
-    for (const emote of client.emojis.cache.values()) priorityTable[emote.id] = compareEmoteNames(emote.name!, query);
+    for (const emote of client.emojis.cache.values())
+        priorityTable[emote.id] = compareEmoteNames(emote.name!, query);
 
-    const resultingIDs = Object.keys(priorityTable).sort((a, b) => priorityTable[b] - priorityTable[a]);
+    const resultingIDs = Object.keys(priorityTable).sort(
+        (a, b) => priorityTable[b] - priorityTable[a],
+    );
     return client.emojis.cache.get(resultingIDs[0])!;
 }

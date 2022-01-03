@@ -5,7 +5,7 @@ import {
     CommandInteraction,
     MessageEmbedOptions,
 } from "discord.js";
-import { CoffeeBot, client } from "..";
+import { CoffeeBot } from "../";
 
 export interface CommandOptions {
     name: string;
@@ -16,10 +16,9 @@ export interface CommandOptions {
     servers?: string[];
     ephemeral?: true;
     su?: true;
-    execute(interaction: CommandInteraction): any;
 }
 
-export class Command {
+export abstract class Command {
     public client: CoffeeBot;
     public name: string;
     public description?: string;
@@ -29,9 +28,8 @@ export class Command {
     public servers?: string[];
     public ephemeral?: true;
     public su?: true;
-    public execute: (interaction: CommandInteraction) => any;
 
-    public constructor(commandOptions: CommandOptions) {
+    public constructor(client: CoffeeBot, commandOptions: CommandOptions) {
         this.client = client;
         this.name = commandOptions.name;
         this.description = commandOptions.description;
@@ -41,7 +39,10 @@ export class Command {
         this.servers = commandOptions.servers;
         this.ephemeral = commandOptions.ephemeral;
         this.su = commandOptions.su;
-        this.execute = commandOptions.execute;
+    }
+
+    async execute(_interaction: CommandInteraction): Promise<any> {
+        throw new Error(`${this.constructor.name} doesn't have a run() method.`);
     }
 }
 
@@ -51,8 +52,12 @@ export interface JSONCommand {
     format?: string;
     embed?: MessageEmbedOptions;
 }
-export interface CommandGroup {[command: string]: JSONCommand}
-export interface CommandSet {[category: string]: CommandGroup}
+export interface CommandGroup {
+    [command: string]: JSONCommand;
+}
+export interface CommandSet {
+    [category: string]: CommandGroup;
+}
 // }}}
 
 // Config {{{

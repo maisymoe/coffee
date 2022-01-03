@@ -1,19 +1,27 @@
-import { Command } from "../../lib/def";
+import { Command, CommandOptions } from "../../lib/def";
 import { CommandInteraction, MessageEmbed } from "discord.js";
 import { createErrorEmbed } from "../../lib/embeds";
+import { CoffeeBot } from "../..";
 
-export default new Command({
-    name: "eval",
-    description: "Evaluates JavaScript.",
-    category: "developer",
-    options: [
-        {
-            name: "code",
-            description: "The code to evaluate.",
-            type: "STRING",
-        },
-    ],
-    su: true,
+export default class EvalCommand extends Command {
+    public constructor(client: CoffeeBot) {
+        const opts: CommandOptions = {
+            name: "eval",
+            description: "Evaluates JavaScript.",
+            category: "developer",
+            options: [
+                {
+                    name: "code",
+                    description: "The code to evaluate.",
+                    type: "STRING",
+                },
+            ],
+            su: true,
+        };
+
+        super(client, opts);
+    }
+
     async execute(interaction: CommandInteraction): Promise<any> {
         const code = interaction.options.getString("code");
         const before = Date.now();
@@ -34,7 +42,23 @@ export default new Command({
 
             return await interaction.editReply({ embeds: [embed] });
         } catch (error: Error | any) {
-            return await interaction.editReply({ embeds: [await createErrorEmbed("Eval", "I couldn\'t evaluate that! Here\'s the error.", [ { name: "\u200B", value: `\`\`\`js\n${error.stack ? error.stack : error.toString()}\`\`\`` } ], "can\'t code? seems like a skill issue to me!")] });
+            return await interaction.editReply({
+                embeds: [
+                    await createErrorEmbed(
+                        "Eval",
+                        "I couldn't evaluate that! Here's the error.",
+                        [
+                            {
+                                name: "\u200B",
+                                value: `\`\`\`js\n${
+                                    error.stack ? error.stack : error.toString()
+                                }\`\`\``,
+                            },
+                        ],
+                        "can't code? seems like a skill issue to me!",
+                    ),
+                ],
+            });
         }
-    },
-});
+    }
+}

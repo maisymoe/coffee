@@ -36,7 +36,7 @@ export abstract class DynamicTextFile {
     public saveImmediate(): Promise<void> {
         if (this.ram) return Promise.resolve();
         if (this.inMiddleOfSI) {
-            const imos = this.inMiddleOfSI
+            const imos = this.inMiddleOfSI;
             return (async (): Promise<void> => {
                 await imos;
                 await this.saveImmediate();
@@ -44,8 +44,8 @@ export abstract class DynamicTextFile {
         }
 
         this.inMiddleOfSI = new Promise((resolve: () => void, reject: (err: unknown) => void) => {
-            console.log(`saving ${this.path}`)
-            const npath = `${this.path}.new.${Date.now()}.${Math.random()}`
+            console.log(`saving ${this.path}`);
+            const npath = `${this.path}.new.${Date.now()}.${Math.random()}`;
             fs.writeFile(npath, this.serialize(), (err) => {
                 if (err) {
                     this.inMiddleOfSI = null;
@@ -55,10 +55,10 @@ export abstract class DynamicTextFile {
                         this.inMiddleOfSI = null;
                         if (err) reject(err);
                         else resolve();
-                    })
+                    });
                 }
-            })
-        })
+            });
+        });
 
         return this.inMiddleOfSI;
     }
@@ -68,20 +68,23 @@ export abstract class DynamicTextFile {
         else {
             let mta: Array<() => void> = [];
             let mtj: Array<(err: unknown) => void> = [];
-            if ((this.modifyTimeoutActive == null) || (this.modifyTimeoutReject == null)) {
-                console.log(`opening save window on ${this.path}`)
+            if (this.modifyTimeoutActive == null || this.modifyTimeoutReject == null) {
+                console.log(`opening save window on ${this.path}`);
                 this.modifyTimeoutActive = mta;
                 this.modifyTimeoutReject = mtj;
                 setTimeout(() => {
-                    this.saveImmediate().then(() => {
-                        this.modifyTimeoutActive = null;
-                        this.modifyTimeoutReject = null;
-                        for (const f of mta) f();
-                    }, (err: unknown) => {
-                        this.modifyTimeoutActive = null;
-                        this.modifyTimeoutReject = null;
-                        for (const f of mtj) f(err);
-                    })
+                    this.saveImmediate().then(
+                        () => {
+                            this.modifyTimeoutActive = null;
+                            this.modifyTimeoutReject = null;
+                            for (const f of mta) f();
+                        },
+                        (err: unknown) => {
+                            this.modifyTimeoutActive = null;
+                            this.modifyTimeoutReject = null;
+                            for (const f of mtj) f(err);
+                        },
+                    );
                 }, 30000);
             } else {
                 mta = this.modifyTimeoutActive;
@@ -98,25 +101,25 @@ export abstract class DynamicTextFile {
     // Reloads the object.
     public reload(): Promise<void> {
         return new Promise((resolve: () => void, reject: (err: unknown) => void) => {
-            fs.readFile(this.path, 'utf8', (err: unknown, data: string) => {
+            fs.readFile(this.path, "utf8", (err: unknown, data: string) => {
                 if (!err) {
                     try {
                         this.deserialize(data);
                     } catch (e) {
-                        reject(e)
+                        reject(e);
                     }
                     resolve();
                 } else {
                     resolve();
                 }
-            })
-        })
+            });
+        });
     }
 
     // Destroys the DynamicTextFile, severing the link to the filesystem (if there is one).
     // Before doing so, saves any modified data, leaving things in a consistent state.
     public async destroy(): Promise<void> {
-        await this.saveImmediate()
+        await this.saveImmediate();
         this.ram = true;
     }
 }
@@ -134,7 +137,7 @@ export class DynamicData<T> extends DynamicTextFile {
 
     // Adds a modification callback.
     public onModify(action: () => void): void {
-        this.modifyActions.push(action)
+        this.modifyActions.push(action);
     }
 
     // Calls the various modifyActions.
@@ -145,18 +148,18 @@ export class DynamicData<T> extends DynamicTextFile {
     // Used to nearly wrap modifying accesses.
     // The promise is resolved when the data is written. It may be rejected if saving fails.
     public modify(modifier: (value: T) => void): Promise<void> {
-        modifier(this.data)
-        this.callOnModify()
-        return this.updated()
+        modifier(this.data);
+        this.callOnModify();
+        return this.updated();
     }
 
     protected serialize(): string {
-        return JSON.stringify(this.data)
+        return JSON.stringify(this.data);
     }
 
     protected deserialize(data: string): void {
-        this.data = JSON.parse(data)
-        this.callOnModify()
+        this.data = JSON.parse(data);
+        this.callOnModify();
     }
 }
 
@@ -181,31 +184,27 @@ export class DynamicDataDump<T> extends DynamicTextFile {
     }
 
     protected serialize(): string {
-        const text = JSON.stringify(this.data)
+        const text = JSON.stringify(this.data);
         this.data = null;
         return text;
     }
 
     protected deserialize(_text: string): void {
-        throw new Error("Deserialization is disabled, this is a dump file.")
+        throw new Error("Deserialization is disabled, this is a dump file.");
     }
 }
 
 export default class DynamicDataManager {
-    public config = new DynamicData<Config>("config", false, true, {})
+    public config = new DynamicData<Config>("config", false, true, {});
     public jsonCommands = new DynamicData<CommandSet>("commands", false, true, {});
 
     public initialLoad: Promise<void>;
 
     public constructor() {
-        this.initialLoad = Promise.all<void>([
-            this.jsonCommands.initialLoad
-        ]).then(() => {});
+        this.initialLoad = Promise.all<void>([this.jsonCommands.initialLoad]).then(() => {});
     }
 
     public async destroy(): Promise<void> {
-        await Promise.all([
-            this.jsonCommands.destroy()
-        ])
+        await Promise.all([this.jsonCommands.destroy()]);
     }
 }

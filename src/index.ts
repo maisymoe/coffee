@@ -27,7 +27,7 @@ export const client = new CoffeeBot({
     http: { api: "https://canary.discord.com/api" },
     allowedMentions: {
         parse: ["users"],
-    }
+    },
 });
 
 client.on("ready", async () => {
