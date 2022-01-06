@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { CommandSet, Config } from "./lib/def";
+import { CommandSet, Config, GuildIndex } from "./lib/def";
 
 export abstract class DynamicTextFile {
     // Immediate access (prevents change-buffering behavior)
@@ -196,15 +196,16 @@ export class DynamicDataDump<T> extends DynamicTextFile {
 
 export default class DynamicDataManager {
     public config = new DynamicData<Config>("config", false, true, {});
+    public settings = new DynamicData<GuildIndex>("settings", true, false, {});
     public jsonCommands = new DynamicData<CommandSet>("commands", false, true, {});
 
     public initialLoad: Promise<void>;
 
     public constructor() {
-        this.initialLoad = Promise.all<void>([this.jsonCommands.initialLoad]).then(() => {});
+        this.initialLoad = Promise.all<void>([this.jsonCommands.initialLoad, this.settings.initialLoad]).then(() => {});
     }
 
     public async destroy(): Promise<void> {
-        await Promise.all([this.jsonCommands.destroy()]);
+        await Promise.all([this.jsonCommands.destroy(), this.settings.destroy()]);
     }
 }

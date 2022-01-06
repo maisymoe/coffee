@@ -9,15 +9,18 @@ import auth from "../data/auth.json";
 
 import DynamicDataManager from "./dynamic-data";
 import { CommandRegistry } from "./command-registry";
+import CoffeeSettingProvider from "./setting-provider";
 
 export class CoffeeBot extends Client {
     public dynamicData: DynamicDataManager;
     public registry: CommandRegistry;
+    public provider: CoffeeSettingProvider;
 
     public constructor(co: ClientOptions) {
         super(co);
         this.dynamicData = new DynamicDataManager();
         this.registry = new CommandRegistry(this);
+        this.provider = new CoffeeSettingProvider(client, this.dynamicData.settings);
     }
 }
 

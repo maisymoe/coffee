@@ -7,6 +7,9 @@ import {
 } from "discord.js";
 import { CoffeeBot } from "../";
 
+export interface GuildData {[setting: string]: unknown}
+export interface GuildIndex {[guildID: string]: GuildData}
+
 export interface CommandOptions {
     name: string;
     description?: string;

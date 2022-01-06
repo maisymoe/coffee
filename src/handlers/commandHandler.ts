@@ -1,6 +1,7 @@
 import { CoffeeBot } from "..";
 import EvalCommand from "../commands/developer/eval";
 import TestCommand from "../commands/test/test";
+import ConfigCommand from "../commands/utility/config";
 import ReloadCommand from "../commands/utility/reload";
 import SayCommand from "../commands/utility/say";
 
@@ -23,7 +24,8 @@ export default async (client: CoffeeBot) => {
         .registerCommand(new EvalCommand(client))
         .registerCommand(new TestCommand(client))
         .registerCommand(new SayCommand(client))
-        .registerCommand(new ReloadCommand(client));
+        .registerCommand(new ReloadCommand(client))
+        .registerCommand(new ConfigCommand(client))
 
     await submitCommands(client);
 
