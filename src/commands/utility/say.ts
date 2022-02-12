@@ -59,7 +59,7 @@ export default class SayCommand extends Command {
         });
         if (sayResult) {
             return await interaction.editReply(
-                `*${interaction.user.toString()} says:*\n${sayResult.text}`,
+                `*${interaction.user.toString()} says:*\n${sayResult.text.substring(0, 1500)}`,
             );
         }
     }

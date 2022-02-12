@@ -17,6 +17,7 @@ export interface CommandOptions {
     options?: ApplicationCommandOptionData[];
     type?: ApplicationCommandType | "CHAT_INPUT";
     servers?: string[];
+    ignoreAck?: true;
     ephemeral?: true;
     su?: true;
 }
@@ -29,6 +30,7 @@ export abstract class Command {
     public options?: ApplicationCommandOptionData[];
     public type?: ApplicationCommandType | "CHAT_INPUT";
     public servers?: string[];
+    public ignoreAck?: true;
     public ephemeral?: true;
     public su?: true;
 
@@ -40,12 +42,13 @@ export abstract class Command {
         this.options = commandOptions.options;
         this.type = commandOptions.type;
         this.servers = commandOptions.servers;
+        this.ignoreAck = commandOptions.ignoreAck;
         this.ephemeral = commandOptions.ephemeral;
         this.su = commandOptions.su;
     }
 
     async execute(_interaction: CommandInteraction): Promise<any> {
-        throw new Error(`${this.constructor.name} doesn't have a run() method.`);
+        throw new Error(`${this.constructor.name} doesn't have an execute() method.`);
     }
 }
 

@@ -28,10 +28,14 @@ export default async (client: CoffeeBot) => {
             });
         }
 
-        if (command!.ephemeral) {
-            await interaction.deferReply({ ephemeral: true });
-        } else {
-            await interaction.deferReply();
+
+        // TODO: ignoreAck and ephemeral directly contradict one another. Rewrite logic?
+        if(!command.ignoreAck) {
+            if (command!.ephemeral) {
+                await interaction.deferReply({ ephemeral: true });
+            } else {
+                await interaction.deferReply();
+            }
         }
 
         if (command!.su && !client.dynamicData.config.data.users!.includes(interaction.user.id)) {

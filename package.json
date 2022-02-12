@@ -26,6 +26,6 @@
   },
   "dependencies": {
     "cumlisp": "^1.1.0",
-    "discord.js": "^13.3.1"
+    "discord.js": "github:monbrey/discord.js#modals"
   }
 }

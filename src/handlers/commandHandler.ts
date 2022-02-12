@@ -28,6 +28,6 @@ export default async (client: CoffeeBot) => {
         .registerCommand(new ConfigCommand(client))
 
     await submitCommands(client);
-
+    
     console.log(`Command handler initialised. Took ${Date.now() - before}ms.`);
 };
