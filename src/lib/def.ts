@@ -1,4 +1,5 @@
 import {
+    ActivityType,
     Client,
     ClientOptions,
     CommandInteraction,
@@ -26,11 +27,15 @@ export interface TestGuild {
 export interface Config {
     testGuilds: TestGuild[];
 
+    logging: {
+        errors: string;
+    }
+
     users: string[];
 
     activity: {
         name: string;
-        type: string;
+        type: ActivityType | string;
     };
 }
 
@@ -42,28 +47,30 @@ export interface AuthConfig {
 
 export interface CommandOptions {
     name: string;
-    description?: string;
-    ephemeral?: true;
-    args?: string[];
-    devOnly?: true;
-    su?: true;
+    description: string;
+    ephemeral?: boolean;
+    ignoreAck?: boolean;
+    devOnly?: boolean;
+    su?: boolean;
     callback: (interaction: CommandInteraction) => any;
 }
 
 export class Command {
     public name: string;
     public description: string;
-    public ephemeral: boolean;
-    public devOnly: boolean;
-    public su: boolean;
+    public ephemeral?: boolean;
+    public ignoreAck?: boolean;
+    public devOnly?: boolean;
+    public su?: boolean;
     public callback: (interaction: CommandInteraction) => any;
 
     public constructor(options: CommandOptions) {
         this.name = options.name;
-        this.description = options.description || "No description.";
-        this.ephemeral = options.ephemeral || false;
-        this.devOnly = options.devOnly || false;
-        this.su = options.su || false;
+        this.description = options.description;
+        this.ephemeral = options.ephemeral;
+        this.ignoreAck = options.ignoreAck;
+        this.devOnly = options.devOnly;
+        this.su = options.su;
         this.callback = options.callback;
     }
 }
