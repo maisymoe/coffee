@@ -1,5 +1,6 @@
 import {
     ActivityType,
+    ApplicationCommandOptionData,
     Client,
     ClientOptions,
     CommandInteraction,
@@ -48,6 +49,7 @@ export interface AuthConfig {
 export interface CommandOptions {
     name: string;
     description: string;
+    options?: ApplicationCommandOptionData[];
     ephemeral?: boolean;
     ignoreAck?: boolean;
     devOnly?: boolean;
@@ -58,19 +60,21 @@ export interface CommandOptions {
 export class Command {
     public name: string;
     public description: string;
+    public options?: ApplicationCommandOptionData[];
     public ephemeral?: boolean;
     public ignoreAck?: boolean;
     public devOnly?: boolean;
     public su?: boolean;
     public callback: (interaction: CommandInteraction) => any;
 
-    public constructor(options: CommandOptions) {
-        this.name = options.name;
-        this.description = options.description;
-        this.ephemeral = options.ephemeral;
-        this.ignoreAck = options.ignoreAck;
-        this.devOnly = options.devOnly;
-        this.su = options.su;
-        this.callback = options.callback;
+    public constructor(co: CommandOptions) {
+        this.name = co.name;
+        this.description = co.description;
+        this.options = co.options;
+        this.ephemeral = co.ephemeral;
+        this.ignoreAck = co.ignoreAck;
+        this.devOnly = co.devOnly;
+        this.su = co.su;
+        this.callback = co.callback;
     }
 }
