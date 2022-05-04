@@ -13,6 +13,6 @@ export default new Command({
         }
     ],
     callback: async (interaction: CommandInteraction) => {
-        return interaction.editReply(`This is a test command. You said ${interaction.options.getString("help")}`);
+        return interaction.editReply({ content: `This is a test command. You said ${interaction.options.getString("help")}` });
     }
 });

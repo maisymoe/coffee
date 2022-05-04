@@ -4,6 +4,7 @@ import {
     Client,
     ClientOptions,
     CommandInteraction,
+    ColorResolvable,
 } from "discord.js";
 import config from "../../data/config.json";
 import auth from "../../data/auth.json";
@@ -15,7 +16,16 @@ export class CoffeeBot extends Client {
     public constructor(options: ClientOptions) {
         super(options);
 
-        this.config = config;
+        this.config = {
+            ...config,
+            cosmetics: {
+                palette: {
+                    error: parseInt(config.cosmetics.palette.error.replace("#", ""), 16),
+                    warn: parseInt(config.cosmetics.palette.warn.replace("#", ""), 16),
+                    success: parseInt(config.cosmetics.palette.success.replace("#", ""), 16),
+                }
+            }
+        };
         this.auth = auth;
     }
 }
@@ -38,6 +48,14 @@ export interface Config {
         name: string;
         type: ActivityType | string;
     };
+
+    cosmetics: {
+        palette: {
+            error: ColorResolvable;
+            warn: ColorResolvable;
+            success: ColorResolvable;
+        }
+    }
 }
 
 export interface AuthConfig {

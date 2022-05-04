@@ -13,6 +13,11 @@ export default async function () {
             await interaction.deferReply({ ephemeral: command?.ephemeral || false });
         }
 
+        if (command?.su && !client.config.users.includes(interaction.user.id)) {
+            await interaction.editReply({ content: "You do not have permission to use this command." });
+            return;
+        }
+
         try {
             await command?.callback(interaction);
         } catch(e) { 

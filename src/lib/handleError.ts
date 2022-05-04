@@ -5,7 +5,7 @@ export default async function(interaction: CommandInteraction, error: Error) {
     const logChannel = await client.channels.fetch(client.config.logging.errors) as TextChannel;
 
     const reportedErrorEmbed = new MessageEmbed({
-        color: "RED",
+        color: client.config.cosmetics.palette.error,
         fields: [
             {
                 name: "Command",
@@ -31,7 +31,7 @@ export default async function(interaction: CommandInteraction, error: Error) {
 
     const presentedErrorEmbed = new MessageEmbed({
         description: `Something went wrong when running ${interaction.commandName}! The error has been reported, and we'll get right on it.`,
-        color: "RED",
+        color: client.config.cosmetics.palette.error,
     });
 
     logChannel.send({ embeds: [reportedErrorEmbed] });
