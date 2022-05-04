@@ -18,20 +18,8 @@ export default async function() {
         }
     }
 
-    const globalCommands = commands.filter(i => !i.devOnly);
-    const syncedCommands = (await client.application!.commands.fetch()).toJSON();
-
-    for (const syncedCommand of syncedCommands) {
-        const command = globalCommands.find(gc => gc.name === syncedCommand.name);
-
-        if (!command || command.devOnly) {
-            console.log(`Deleting synced command ${syncedCommand.name}`);
-            await client.application!.commands.delete(syncedCommand.id);
-        } else if (!syncedCommands.map(c => c.name).includes(command.name)) {
-            console.log(`Syncing local command ${command.name}`);
-            await client.application!.commands.create(command);
-        }
-    }
+    const globalCommands = commands.filter(c => !c.devOnly);
+    client.application?.commands.set(globalCommands);
 
     for (const guild of client.config.testGuilds) {
         await (await client.guilds.fetch(guild.id)).commands.set(commands);
