@@ -1,6 +1,6 @@
 import { Command } from "../../lib/def";
-import { CommandInteraction, MessageEmbed } from "discord.js";
-import { client } from "../..";
+import { CommandInteraction } from "discord.js";
+import { createStatusEmbed } from "../../lib/embeds";
 
 export default new Command({
     name: "eval",
@@ -25,46 +25,39 @@ export default new Command({
             callback = eval(code!);
             took = Date.now() - before;
 
-            embed = new MessageEmbed({
-                description: "Success!",
-                color: client.config.cosmetics.palette.success,
-                fields: [
-                    {
-                        name: "Time",
-                        value: `${took}ms`,
-                        inline: true,
-                    },
-                    {
-                        name: "Type",
-                        value: typeof callback,
-                        inline: true,
-                    },
-                    {
-                        name: "Evaluated",
-                        value: `\`\`\`js\n${code!}\`\`\``,
-                    },
-                    {
-                        name: "Callback",
-                        value: `\`\`\`js\n${callback}\`\`\``,
-                    }
-                ],
-            });
+            embed = createStatusEmbed("success", "Success!", [
+                {
+                    name: "Time",
+                    value: `${took}ms`,
+                    inline: true,
+                },
+                {
+                    name: "Type",
+                    value: typeof callback,
+                    inline: true,
+                },
+                {
+                    name: "Evaluated",
+                    value: `\`\`\`js\n${code!}\`\`\``,
+                },
+                {
+                    name: "Callback",
+                    value: `\`\`\`js\n${callback}\`\`\``,
+                }
+            ]);
         } catch (e) {
             const typedError = e as Error;
-            embed = new MessageEmbed({
-                description: "Error...",
-                color: client.config.cosmetics.palette.error,
-                fields: [
-                    {
-                        name: "Evaluated",
-                        value: `\`\`\`js\n${code!}\`\`\``,
-                    },
-                    {
-                        name: "Error",
-                        value: `\`\`\`js\n${typedError.stack ? typedError.stack : typedError.toString()}\`\`\``,
-                    }
-                ],
-            });
+
+            embed = createStatusEmbed("error", "Error...", [
+                {
+                    name: "Evaluated",
+                    value: `\`\`\`js\n${code!}\`\`\``,
+                },
+                {
+                    name: "Error",
+                    value: `\`\`\`js\n${typedError.stack ? typedError.stack : typedError.toString()}\`\`\``,
+                }
+            ]);
         };
 
         return interaction.editReply({ embeds: [embed] });
