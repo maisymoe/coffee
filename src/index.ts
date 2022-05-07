@@ -1,5 +1,5 @@
 import { CoffeeBot } from "./lib/def";
-import { Intents } from "discord.js";
+import { ActivityOptions, Intents } from "discord.js";
 
 import initCommandHandler from "./lib/commandHandler";
 import initInteractionHandler from "./lib/interactionHandler";
@@ -16,6 +16,8 @@ export const client = new CoffeeBot({
 client.once("ready", () => {
     initCommandHandler();
     initInteractionHandler();
+
+    client.user?.setActivity(client.config.activity as ActivityOptions);
 });
 
 client.login(client.auth.token);

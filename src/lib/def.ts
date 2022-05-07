@@ -20,6 +20,7 @@ export class CoffeeBot extends Client {
             ...config,
             cosmetics: {
                 palette: {
+                    accent: parseInt(config.cosmetics.palette.accent.replace("#", ""), 16),
                     error: parseInt(config.cosmetics.palette.error.replace("#", ""), 16),
                     warn: parseInt(config.cosmetics.palette.warn.replace("#", ""), 16),
                     success: parseInt(config.cosmetics.palette.success.replace("#", ""), 16),
@@ -51,6 +52,7 @@ export interface Config {
 
     cosmetics: {
         palette: {
+            accent: ColorResolvable;
             error: ColorResolvable;
             warn: ColorResolvable;
             success: ColorResolvable;
