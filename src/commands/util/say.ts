@@ -7,7 +7,6 @@ import { client } from "../..";
 export default new Command({
     name: "say",
     description: "Sends a given message, capable of parsing LISP.",
-    devOnly: true,
     options: [
         {
             name: "text",
