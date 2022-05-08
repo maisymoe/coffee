@@ -2,12 +2,14 @@ lockfileVersion: 5.3
 
 specifiers:
   '@types/node': ^17.0.31
+  cumlisp: ^1.3.1
   discord.js: ^13.6.0
   rimraf: ^3.0.2
   tsc-watch: ^5.0.3
   typescript: ^4.6.4
 
 dependencies:
+  cumlisp: 1.3.1
   discord.js: 13.6.0
 
 devDependencies:
@@ -99,6 +101,10 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
     dev: true
+
+  /cumlisp/1.3.1:
+    resolution: {integrity: sha512-otCUUXQnI2DUsIL7GUKR2N6m0DEZKnj8PojJTZEoYlppWRQ0QYLA1h2rcgCs0iUJjMIaV0ZNuFw8O/CKJSPbKg==}
+    dev: false
 
   /delayed-stream/1.0.0:
     resolution: {integrity: sha1-3zrhmayt+31ECqrgsp4icrJOxhk=}

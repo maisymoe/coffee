@@ -5,7 +5,11 @@ import {
     ClientOptions,
     CommandInteraction,
     ColorResolvable,
+    TextBasedChannel,
+    User,
 } from "discord.js";
+import { VM, libBasic, Value } from "cumlisp";
+
 import config from "../../data/config.json";
 import auth from "../../data/auth.json";
 
@@ -96,5 +100,23 @@ export class Command {
         this.devOnly = co.devOnly;
         this.su = co.su;
         this.callback = co.callback;
+    }
+}
+
+// cLISP VMContext suitable for use in slash commands
+export interface DiscordVMContext {
+    client: Client;
+    interaction: CommandInteraction;
+    channel: TextBasedChannel;
+    author: User;
+    args: Value[];
+};
+
+export class CoffeeVM extends VM {
+    public readonly context?: DiscordVMContext;
+    public constructor(context?: DiscordVMContext) {
+        super();
+        this.context = context;
+        libBasic.installBasic(this);
     }
 }
