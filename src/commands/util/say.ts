@@ -13,7 +13,7 @@ export default new Command({
             description: "What to say",
             type: "STRING",
             required: true,
-        }
+        },
     ],
     callback: async (interaction: CommandInteraction) => {
         const text = interaction.options.getString("text");
@@ -23,18 +23,20 @@ export default new Command({
             channel: interaction.channel as TextBasedChannel,
             author: interaction.user,
             args: [],
-        }
-        
+        };
+
         let result: string;
 
         try {
             result = await run(text!, new CoffeeVM(vmContext));
-        } catch(e) {
+        } catch (e) {
             result = `**Formatting error**: \`${e}\` (was your LISP correct?)`;
         }
 
         const padding = `*${interaction.user.toString()} says:*\n`;
 
-        return interaction.editReply({ content: padding + result.substring(0, padding.length) });
-    }
+        return interaction.editReply({
+            content: padding + result.substring(0, 2000 - padding.length),
+        });
+    },
 });

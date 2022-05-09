@@ -9,6 +9,7 @@ import {
     User,
 } from "discord.js";
 import { VM, libBasic, Value } from "cumlisp";
+import { installCoffee } from "./lisp/lib-coffee";
 
 import config from "../../data/config.json";
 import auth from "../../data/auth.json";
@@ -113,10 +114,11 @@ export interface DiscordVMContext {
 };
 
 export class CoffeeVM extends VM {
-    public readonly context?: DiscordVMContext;
-    public constructor(context?: DiscordVMContext) {
+    public readonly context: DiscordVMContext;
+    public constructor(context: DiscordVMContext) {
         super();
         this.context = context;
         libBasic.installBasic(this);
+        installCoffee(this, context);
     }
 }
