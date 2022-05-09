@@ -2,22 +2,42 @@ import { VM, Value, asString, wrapFunc, falseValue } from "cumlisp";
 import { DiscordVMContext } from "../def";
 import meta from "../../../package.json";
 
+type MetaType = {
+    [key: string]: string;
+}
+
 export function installCoffee(vm: VM, context: DiscordVMContext) {
     vm.install({
-        // "meta": wrapFunc("meta", 1, async (args: Value[]): Promise<Value> => {
-        //     const whitelistedKeys = ["name", "description", "version", "author", "license"];
-        //     const name = asString(args[0]);
+        "meta": wrapFunc("meta", 1, async (args: Value[]): Promise<Value> => {
+            const availableMeta: MetaType = {
+                "name": meta.name,
+                "version": meta.version,
+                "description": meta.description,
+                "author": meta.author,
+                "license": meta.license,
+            }
 
-        //     if (whitelistedKeys.includes(name)) {
-        //         const operableKeys = Object.entries(meta);
-        //         const itemIndex = operableKeys.indexOf([name, ""]);
-        //         return asString(operableKeys[itemIndex]);
-        //     };
+            const name = asString(args[0]);
 
-        //     return falseValue;
-        // }),
-        "hello": wrapFunc("hello", 0, async (args: Value[]): Promise<Value> => {
-            return "Hello, world! (this is a placeholder until lib-coffee is more functional)";
+            if (name in availableMeta) {
+                return availableMeta[name];
+            } else {
+                throw new Error(`No meta data found for "${name}"`);
+            };
+        }),
+        "dep-ver": wrapFunc("dep-ver", 1, async (args: Value[]): Promise<Value> => {
+            const name = asString(args[0]);
+
+            const mergedDeps: MetaType = {
+                ...meta.dependencies,
+                ...meta.devDependencies,
+            }
+
+            if (name in mergedDeps) {
+                return mergedDeps[name];
+            } else {
+                throw new Error(`Dependency "${name}" not found`);
+            };
         }),
     });
 };
