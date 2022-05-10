@@ -29,7 +29,7 @@ export default new Command({
                         **Servers**: ${(await client.guilds.fetch()).size}
                         **Users (cached)**: ${client.guilds.cache.reduce((a: any, b: {memberCount: any}) => a + b.memberCount, 0)}
                         **Created**: ${client.user?.createdAt.toDateString()}
-                        **Joined:** ${interaction.guild?.me?.joinedAt?.toDateString()}
+                        ${interaction.inGuild() ? `**Joined:** ${interaction.guild?.me?.joinedAt?.toDateString()}` : ""}
                     `
                 },
                 {
