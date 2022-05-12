@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@types/node': ^17.0.31
+  '@types/node': ^17.0.32
   cumlisp: ^1.3.1
   discord.js: ^13.6.0
   rimraf: ^3.0.2
@@ -13,7 +13,7 @@ dependencies:
   discord.js: 13.6.0
 
 devDependencies:
-  '@types/node': 17.0.31
+  '@types/node': 17.0.32
   rimraf: 3.0.2
   tsc-watch: 5.0.3_typescript@4.6.4
   typescript: 4.6.4
@@ -28,7 +28,7 @@ packages:
       discord-api-types: 0.26.1
       ts-mixer: 6.0.1
       tslib: 2.4.0
-      zod: 3.15.1
+      zod: 3.16.0
     dev: false
 
   /@discordjs/collection/0.4.0:
@@ -49,17 +49,17 @@ packages:
   /@types/node-fetch/2.6.1:
     resolution: {integrity: sha512-oMqjURCaxoSIsHSr1E47QHzbmzNR5rK8McHuNb11BOM9cHcIK3Avy0s/b2JlXHoQGTYS3NsvWzV1M0iK7l0wbA==}
     dependencies:
-      '@types/node': 17.0.31
+      '@types/node': 17.0.32
       form-data: 3.0.1
     dev: false
 
-  /@types/node/17.0.31:
-    resolution: {integrity: sha512-AR0x5HbXGqkEx9CadRH3EBYx/VkiUgZIhP4wvPn/+5KIsgpNoyFaRlVe0Zlx9gRtg8fA06a9tskE2MSN7TcG4Q==}
+  /@types/node/17.0.32:
+    resolution: {integrity: sha512-eAIcfAvhf/BkHcf4pkLJ7ECpBAhh9kcxRBpip9cTiO+hf+aJrsxYxBeS6OXvOd9WqNAJmavXVpZvY1rBjNsXmw==}
 
   /@types/ws/8.5.3:
     resolution: {integrity: sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w==}
     dependencies:
-      '@types/node': 17.0.31
+      '@types/node': 17.0.32
     dev: false
 
   /ansi-regex/5.0.1:
@@ -387,6 +387,6 @@ packages:
         optional: true
     dev: false
 
-  /zod/3.15.1:
-    resolution: {integrity: sha512-WAdjcoOxa4S9oc/u7fTbC3CC7uVqptLLU0LKqS8RDBOrCXp2t5avM8BUfgNVZJymGWAx6SEUYxWPPoYuQ5rgwQ==}
+  /zod/3.16.0:
+    resolution: {integrity: sha512-szrIkryADbTM+xBt2a1KoS2CJQXec4f9xG78bj5MJeEH/XqmmHpnO+fG3IE115AKBJak+2HrbxLZkc9mhdbDKA==}
     dev: false
