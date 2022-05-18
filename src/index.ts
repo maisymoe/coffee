@@ -20,4 +20,4 @@ client.once("ready", () => {
     client.user?.setActivity(client.config.activity as ActivityOptions);
 });
 
-client.login(client.auth.token);
+client.login(client.config.auth.token);
