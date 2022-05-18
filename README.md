@@ -15,8 +15,7 @@ Beef's personal Discord bot, but rewritten.
 pnpm i # or equivalent for your package manager of choice
 ```
 
-2. Create the `data/` directory at the root of the project.
-Fill out `config.json` and `auth.json`. (this will be easier soon, but for now see the typedefs)
+2. Rename `example.config.json`, to `config.json`, and fill out the fields (this will be easier soon, but for now see the type definitions)
 
 3. Then, build the bot with:
 ```sh

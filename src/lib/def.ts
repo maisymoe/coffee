@@ -12,11 +12,9 @@ import { VM, libBasic, Value } from "cumlisp";
 import { installCoffee } from "./lisp/lib-coffee";
 
 import config from "../../data/config.json";
-import auth from "../../data/auth.json";
 
 export class CoffeeBot extends Client {
     public config: Config;
-    public auth: AuthConfig;
 
     public constructor(options: ClientOptions) {
         super(options);
@@ -32,7 +30,6 @@ export class CoffeeBot extends Client {
                 }
             }
         };
-        this.auth = auth;
     }
 }
 
@@ -42,6 +39,11 @@ export interface TestGuild {
 }
 
 export interface Config {
+    auth: {
+        token: string;
+        publicKey: string;
+    }    
+
     testGuilds: TestGuild[];
 
     logging: {
@@ -64,13 +66,7 @@ export interface Config {
         }
     }
 }
-
-export interface AuthConfig {
-    token: string;
-    clientId: string;
-    publicKey: string;
-}
-
+ 
 export interface CommandOptions {
     name: string;
     description: string;

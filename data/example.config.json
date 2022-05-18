@@ -1,0 +1,33 @@
+{
+    "auth": {
+        "token": "",
+        "publicKey": ""
+    },
+
+    "testGuilds": [
+        {
+            "id": "",
+            "alias": ""
+        }   
+    ],
+
+    "logging": {
+        "errors": ""
+    },
+
+    "users": [""],
+
+    "activity": {
+        "name": "",
+        "type": ""
+    },
+
+    "cosmetics": {
+        "palette": {
+            "accent": "",
+            "error": "",
+            "warn": "",
+            "success": ""
+        }
+    }
+}
