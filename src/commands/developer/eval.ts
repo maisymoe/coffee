@@ -9,7 +9,6 @@ export default new Command({
     name: "eval",
     description: "Evaluate code - only available to developers!",
     su: true,
-    devOnly: true,
     ignoreAck: true,
     options: [
         {
