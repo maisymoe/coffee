@@ -1,4 +1,5 @@
 import { Command } from "../../lib/def";
+import { reply } from "../../lib/common";
 import { CommandInteraction, MessageEmbed } from "discord.js";
 import { client } from "../..";
 
@@ -55,6 +56,6 @@ export default new Command({
             ]
         });
 
-        return interaction.editReply({ embeds: [infoEmbed] });
+        return reply(interaction, { embeds: [infoEmbed] });
     }
 });

@@ -1,8 +1,9 @@
-import { client } from "..";
+import { client } from "../..";
 import { Interaction } from "discord.js";
 import { commands } from "./commandHandler";
-import handleError from "./handleError";
-import { createStatusEmbed } from "./embeds";
+import { handleError } from "../errors";
+import { createStatusEmbed } from "../embeds";
+import { reply } from "../common";
 
 export default async function () {
     client.on("interactionCreate", async (interaction: Interaction) => {
@@ -15,7 +16,7 @@ export default async function () {
         }
 
         if (command?.su && !client.config.users.includes(interaction.user.id)) {
-            await interaction.editReply({ embeds: [createStatusEmbed("warn", `You don't have permission to use \`${interaction.commandName}\`.`)] });
+            await reply(interaction, { embeds: [createStatusEmbed("warn", `You don't have permission to use \`${interaction.commandName}\`.`)] });
             return;
         }
 

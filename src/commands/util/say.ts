@@ -1,4 +1,6 @@
 import { CoffeeVM, DiscordVMContext, Command } from "../../lib/def";
+import { reply } from "../../lib/common";
+
 import { CommandInteraction, TextBasedChannel } from "discord.js";
 import { run } from "cumlisp";
 
@@ -35,7 +37,7 @@ export default new Command({
 
         const padding = `*${interaction.user.toString()} says:*\n`;
 
-        return interaction.editReply({
+        return reply(interaction, {
             content: padding + result.substring(0, 2000 - padding.length),
         });
     },

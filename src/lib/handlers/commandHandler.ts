@@ -1,13 +1,13 @@
 import { join } from "path";
 import { readdirSync } from "fs";
 
-import { Command } from "./def";
-import { client } from "..";
+import { Command } from "../def";
+import { client } from "../..";
 
 export const commands = new Array<Command>();
 
 export default async function() {
-    const rootCommandsDir = join(__dirname, "../", "commands/").trim();
+    const rootCommandsDir = join(__dirname, "../", "../", "commands/").trim();
     const commandSubDirs = readdirSync(rootCommandsDir);
 
     for (const subDir of commandSubDirs) {

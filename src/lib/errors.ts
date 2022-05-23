@@ -1,8 +1,9 @@
 import { CommandInteraction, TextChannel } from "discord.js";
 import { client } from "..";
 import { createStatusEmbed } from "./embeds";
+import { reply } from "./common";
 
-export default async function(interaction: CommandInteraction, error: Error) {
+export async function handleError(interaction: CommandInteraction, error: Error) {
     const logChannel = await client.channels.fetch(client.config.logging.errors) as TextChannel;
 
     const reportedErrorEmbed = createStatusEmbed("error", undefined, [
@@ -30,5 +31,5 @@ export default async function(interaction: CommandInteraction, error: Error) {
     const presentedErrorEmbed = createStatusEmbed("error", `Something went wrong when running \`${interaction.commandName}\`! The error has been reported, and we'll get right on it.`);
 
     logChannel.send({ embeds: [reportedErrorEmbed] });
-    interaction.editReply({ embeds: [presentedErrorEmbed] });
+    reply(interaction, { embeds: [presentedErrorEmbed] });
 }
