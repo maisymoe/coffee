@@ -13,8 +13,8 @@ export async function handleError(interaction: CommandInteraction, error: Error)
             inline: true,
         },
         {
-            name: "Guild",
-            value: `${interaction.guild?.name} (${interaction.guild?.id})`,
+            name: "Location",
+            value: interaction.inGuild() ? `${interaction.guild?.name} (${interaction.guild?.id})` : "DM",
             inline: true,
         },
         {

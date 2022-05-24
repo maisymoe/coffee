@@ -1,65 +1,25 @@
 import { Command } from "../../lib/def";
-import { CommandInteraction, Modal, ModalSubmitInteraction } from "discord.js";
-import { createStatusEmbed } from "../../lib/embeds";
+import { CommandInteraction } from "discord.js";
 
-import { showModal } from "../../lib/modals";
+import { createStatusEmbed } from "../../lib/embeds";
 import { reply } from "../../lib/common";
 
 export default new Command({
     name: "eval",
     description: "Evaluate code - only available to developers!",
     su: true,
-    ignoreAck: true,
     options: [
         {
-            name: "text",
-            description: "Evaluate text from a command",
-            type: "SUB_COMMAND",
-            options: [
-                {
-                    name: "code",
-                    description: "The code to evaluate",
-                    type: "STRING",
-                    required: true,
-                }
-            ]
-        },
-        {
-            name: "modal",
-            description: "Evaluate text from a modal",
-            type: "SUB_COMMAND",
+            name: "code",
+            description: "The code to evaluate.",
+            type: "STRING",
+            required: true,
         }
     ],
     callback: async (interaction: CommandInteraction) => {
-        let code: string;
-        let modalReply: ModalSubmitInteraction | undefined;
-
-        if (interaction.options.getSubcommand() === "text") {
-            code = interaction.options.data[0].options![0].value!.toString();
-        } else {
-            modalReply = await showModal(new Modal({
-                customId: "eval",
-                title: "Eval",
-                components: [
-                    {
-                        type: "ACTION_ROW",
-                        components: [
-                            {
-                                type: "TEXT_INPUT",
-                                style: "PARAGRAPH",
-                                minLength: 1,
-                                customId: "codeInput",
-                                label: "Code",
-                                required: true,
-                            }
-                        ]
-                    }
-                ]
-            }), 600000, interaction);
-            code = modalReply?.fields.getTextInputValue("codeInput")!;
-        }
-
+        const code = interaction.options.getString("code");
         const before = Date.now();
+
         let took;
         let callback;
         let embed;
@@ -81,11 +41,11 @@ export default new Command({
                 },
                 {
                     name: "Evaluated",
-                    value: `\`\`\`js\n${code!}\`\`\``,
+                    value: `\`\`\`js\n${code!.substring(0, 1024)}\`\`\``,
                 },
                 {
                     name: "Callback",
-                    value: `\`\`\`js\n${callback}\`\`\``,
+                    value: `\`\`\`js\n${callback.substring(0, 1024)}\`\`\``,
                 }
             ]);
         } catch (e) {
@@ -94,15 +54,15 @@ export default new Command({
             embed = createStatusEmbed("error", "Error...", [
                 {
                     name: "Evaluated",
-                    value: `\`\`\`js\n${code!}\`\`\``,
+                    value: `\`\`\`js\n${code!.substring(0, 1024)}\`\`\``,
                 },
                 {
                     name: "Error",
-                    value: `\`\`\`js\n${typedError.stack ? typedError.stack : typedError.toString()}\`\`\``,
+                    value: `\`\`\`js\n${(typedError.stack ? typedError.stack : typedError.toString()).substring(0, 1024)}\`\`\``,
                 }
             ]);
         };
 
-        return await reply(modalReply ? modalReply : interaction, { embeds: [embed] });
+        return await reply(interaction, { embeds: [embed] });
     }
 });

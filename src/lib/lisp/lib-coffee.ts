@@ -1,4 +1,4 @@
-import { VM, Value, asString, wrapFunc, falseValue } from "cumlisp";
+import { VM, Value, asString, wrapFunc } from "cumlisp";
 import { DiscordVMContext } from "../def";
 import meta from "../../../package.json";
 
