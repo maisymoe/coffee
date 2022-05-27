@@ -5,7 +5,7 @@ import { handleError } from "../errors";
 import { createStatusEmbed } from "../embeds";
 import { reply } from "../common";
 
-export default async function () {
+export default async function() {
     client.on("interactionCreate", async (interaction: Interaction) => {
         if (!interaction.isCommand()) return;
 
