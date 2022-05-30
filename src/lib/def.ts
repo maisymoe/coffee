@@ -12,12 +12,16 @@ import { VM, libBasic, Value } from "cumlisp";
 import { installCoffee } from "./lisp/lib-coffee";
 
 import config from "../../data/config.json";
+import tags from "../../data/tags.json";
 
 export class CoffeeBot extends Client {
+    public tags: Tag[];
     public config: Config;
 
     public constructor(options: ClientOptions) {
         super(options);
+
+        this.tags = tags;
 
         this.config = {
             ...config,
@@ -31,6 +35,12 @@ export class CoffeeBot extends Client {
             }
         };
     }
+}
+
+export interface Tag {
+    name: string;
+    response: string;
+    guildId?: string;
 }
 
 export interface TestGuild {

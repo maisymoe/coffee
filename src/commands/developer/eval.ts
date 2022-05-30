@@ -45,7 +45,7 @@ export default new Command({
                 },
                 {
                     name: "Callback",
-                    value: `\`\`\`js\n${callback.substring(0, 1024)}\`\`\``,
+                    value: `\`\`\`js\n${callback.toString().substring(0, 1024)}\`\`\``,
                 }
             ]);
         } catch (e) {

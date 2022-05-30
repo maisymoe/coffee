@@ -1,13 +1,12 @@
 import { Command } from "../../lib/def";
 import { CommandInteraction } from "discord.js";
-
-import tags from "../../../data/tags.json";
 import { reply } from "../../lib/common";
+
+import { client } from "../..";
 
 export default new Command({
     name: "tag",
     description: "Send a message with a given tag",
-    devOnly: true,
     options: [
         {
             name: "tag",
@@ -18,6 +17,9 @@ export default new Command({
         },
     ],
     callback: async (interaction: CommandInteraction) => {
-        return reply(interaction, { content: tags.find(tag => tag.name === interaction.options.getString("tag"))?.response });
+        const globalTags = client.tags.filter(t => !t.guildId);
+        const availableTags = globalTags.concat(client.tags.filter(t => t.guildId === interaction.guildId));
+
+        return reply(interaction, { content: availableTags.find(tag => tag.name === interaction.options.getString("tag"))?.response });
     }
 });

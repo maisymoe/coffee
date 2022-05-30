@@ -1,0 +1,10 @@
+[
+    {
+        "name": "hello",
+        "response": "Hallo Welt! Ich bin Kaffee"
+    },
+    {
+        "name": "test",
+        "response": "an epic test tag!"
+    }
+ ]

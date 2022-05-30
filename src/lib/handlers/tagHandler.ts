@@ -7,7 +7,9 @@ export default async function() {
         if (!interaction.isAutocomplete() || interaction.commandName !== "tag") return;
         const focusedValue = interaction.options.getFocused();
 
-        const tagsToSend = tags.filter(tag => tag.name.startsWith(focusedValue.toString()));
+        const globalTags = client.tags.filter(t => !t.guildId);
+        const availableTags = globalTags.concat(client.tags.filter(t => t.guildId === interaction.guildId));
+        const tagsToSend = availableTags.filter(tag => tag.name.startsWith(focusedValue.toString()));
 
         await interaction.respond(tagsToSend.map(tag => ({ name: tag.name, value: tag.name })));
     })
