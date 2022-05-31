@@ -18,6 +18,6 @@ export default new Command({
         },
     ],
     callback: async (interaction: CommandInteraction) => {
-        return reply(interaction, { content: `You said ${interaction.options.getString("string")}` });
+        return reply(interaction, { content: `You said ${interaction.options.getString("string", true)}` });
     }
 });

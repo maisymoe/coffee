@@ -21,16 +21,22 @@ export default new Command({
             description: "The content to DM the user.",
             type: "STRING",
             required: true,
+        },
+        {
+            name: "attachment",
+            description: "An optional attachment to DM the user.",
+            type: "ATTACHMENT",
         }
     ],
     callback: async (interaction: CommandInteraction) => {
         let embed: MessageEmbed;
         
-        const user = interaction.options.getUser("user");
-        const content = interaction.options.getString("content");
+        const user = interaction.options.getUser("user", true);
+        const content = interaction.options.getString("content", true);
+        const attachment = interaction.options.getAttachment("attachment");
 
         try {
-            user!.send({ content: content });
+            await user.send({ content: content, files: attachment ? [attachment] : undefined });
             embed = createStatusEmbed("success", `${user?.tag} was messaged successfully.`);
         } catch (e) {
             embed = createStatusEmbed("error", `${user?.tag} could not be messaged.`);

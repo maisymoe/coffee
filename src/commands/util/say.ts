@@ -18,7 +18,7 @@ export default new Command({
         },
     ],
     callback: async (interaction: CommandInteraction) => {
-        const text = interaction.options.getString("text");
+        const text = interaction.options.getString("text", true);
         const vmContext: DiscordVMContext = {
             client: client,
             interaction: interaction,
@@ -30,7 +30,7 @@ export default new Command({
         let result: string;
 
         try {
-            result = await run(text!, new CoffeeVM(vmContext));
+            result = await run(text, new CoffeeVM(vmContext));
         } catch (e) {
             result = `**Formatting error**: \`${e}\` (was your LISP correct?)`;
         }

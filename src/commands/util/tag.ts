@@ -20,6 +20,6 @@ export default new Command({
         const globalTags = client.tags.filter(t => !t.guildId);
         const availableTags = globalTags.concat(client.tags.filter(t => t.guildId === interaction.guildId));
 
-        return reply(interaction, { content: availableTags.find(tag => tag.name === interaction.options.getString("tag"))?.response });
+        return reply(interaction, { content: availableTags.find(tag => tag.name === interaction.options.getString("tag", true))?.response });
     }
 });

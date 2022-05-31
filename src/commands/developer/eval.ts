@@ -17,7 +17,7 @@ export default new Command({
         }
     ],
     callback: async (interaction: CommandInteraction) => {
-        const code = interaction.options.getString("code");
+        const code = interaction.options.getString("code", true);
         const before = Date.now();
 
         let took;
@@ -41,7 +41,7 @@ export default new Command({
                 },
                 {
                     name: "Evaluated",
-                    value: `\`\`\`js\n${code!.substring(0, 1024)}\`\`\``,
+                    value: `\`\`\`js\n${code.substring(0, 1024)}\`\`\``,
                 },
                 {
                     name: "Callback",
@@ -54,7 +54,7 @@ export default new Command({
             embed = createStatusEmbed("error", "Error...", [
                 {
                     name: "Evaluated",
-                    value: `\`\`\`js\n${code!.substring(0, 1024)}\`\`\``,
+                    value: `\`\`\`js\n${code.substring(0, 1024)}\`\`\``,
                 },
                 {
                     name: "Error",
