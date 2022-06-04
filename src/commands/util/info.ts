@@ -36,7 +36,7 @@ export default new Command({
                 {
                     name: "Software",
                     value: `
-                        **Coffee:** ${meta.version}
+                        **Coffee:** v${meta.version}
                         **Node.JS**: ${process.version}
                         **TypeScript**: v${meta.devDependencies["typescript"].slice(1)}
                         **Discord.JS**: v${meta.dependencies["discord.js"].slice(1)}

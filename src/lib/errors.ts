@@ -24,7 +24,7 @@ export async function handleError(interaction: CommandInteraction, error: Error)
         },
         {
             name: "Error",
-            value: ` \`\`\`js\n${error.stack ? error.stack : error.toString()}\`\`\``
+            value: ` \`\`\`js\n${(error.stack ? error.stack : error.toString()).substring(0, 1024)}\`\`\``
         }
     ]);
 
