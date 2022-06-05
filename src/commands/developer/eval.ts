@@ -1,5 +1,5 @@
 import { Command } from "../../lib/def";
-import { CommandInteraction } from "discord.js";
+import { CommandInteraction, Formatters } from "discord.js";
 
 import { createStatusEmbed } from "../../lib/embeds";
 import { reply } from "../../lib/common";
@@ -41,11 +41,11 @@ export default new Command({
                 },
                 {
                     name: "Evaluated",
-                    value: `\`\`\`js\n${code.substring(0, 1024)}\`\`\``,
+                    value: Formatters.codeBlock("js", code.substring(0, 1000)),
                 },
                 {
                     name: "Callback",
-                    value: `\`\`\`js\n${callback.toString().substring(0, 1024)}\`\`\``,
+                    value: Formatters.codeBlock("js", callback.toString().substring(0, 1000)),
                 }
             ]);
         } catch (e) {
@@ -54,11 +54,11 @@ export default new Command({
             embed = createStatusEmbed("error", "Error...", [
                 {
                     name: "Evaluated",
-                    value: `\`\`\`js\n${code.substring(0, 1024)}\`\`\``,
+                    value: Formatters.codeBlock("js", code.substring(0, 1000)),
                 },
                 {
                     name: "Error",
-                    value: `\`\`\`js\n${(typedError.stack ? typedError.stack : typedError.toString()).substring(0, 1024)}\`\`\``,
+                    value: Formatters.codeBlock("js", (typedError.stack ? typedError.stack : typedError.toString()).substring(0, 1000)),
                 }
             ]);
         };

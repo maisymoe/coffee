@@ -1,6 +1,6 @@
 {
   "name": "coffee-rewrite",
-  "version": "1.0.2-3",
+  "version": "1.0.3",
   "description": "Beef's personal Discord bot, but rewritten.",
   "main": "dist/src/index.js",
   "scripts": {

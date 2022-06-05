@@ -1,4 +1,4 @@
-import { CommandInteraction, TextChannel } from "discord.js";
+import { CommandInteraction, TextChannel, Formatters } from "discord.js";
 import { client } from "..";
 import { createStatusEmbed } from "./embeds";
 import { reply } from "./common";
@@ -24,7 +24,7 @@ export async function handleError(interaction: CommandInteraction, error: Error)
         },
         {
             name: "Error",
-            value: ` \`\`\`js\n${(error.stack ? error.stack : error.toString()).substring(0, 1024)}\`\`\``
+            value: Formatters.codeBlock("js", (error.stack ? error.stack : error.toString()).substring(0, 1000))
         }
     ]);
 
