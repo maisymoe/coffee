@@ -24,11 +24,12 @@ export function createGenericEmbed({ title, description, footer, fields, color }
     return embed;
 }
 
-export function createErrorEmbed({ title, description, fields }: ErrorEmbedOptions): EmbedBuilder {
+export function createErrorEmbed({ title, description, fields, footer }: ErrorEmbedOptions): EmbedBuilder {
     return createGenericEmbed({
         title: title ?? "",
         description: description ?? "",
         fields: fields ?? [],
+        footer: footer,
         color: "Red",
     });
 }
