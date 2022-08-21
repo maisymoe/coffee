@@ -10,6 +10,8 @@
     },
     "author": "Beef",
     "license": "BSD-3-Clause",
+    "repository": "https://github.com/Beefers/Coffee",
+    "bugs": "https://github.com/Beefers/Coffee/issues",
     "dependencies": {
         "discord.js": "^14.2.0",
         "valtio": "^1.6.4"
