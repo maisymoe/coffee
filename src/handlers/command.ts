@@ -3,7 +3,7 @@ import { join } from "path";
 import { client } from "..";
 
 import { Command } from "../def";
-import convertToDiscordCommands from "../lib/convertToDiscordCommands";
+import { convertToDiscordCommands } from "../lib/common";
 
 export const commands = new Array<Command>();
 
