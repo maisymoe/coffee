@@ -1,4 +1,5 @@
 import { ChatInputCommandInteraction, Client, ClientOptions, ApplicationCommandOptionData, EmbedFooterOptions, ColorResolvable, EmbedField, ActivityType } from "discord.js";
+import { PackageJson } from "type-fest";
 
 export interface CommandOptions {
     name: string;
@@ -36,7 +37,7 @@ export interface Config {
     }
     activity: {
         name: string;
-        // type: ActivityType;
+        type: ActivityTypeResolvable;
     };
 }
 
@@ -54,16 +55,16 @@ export interface ErrorEmbedOptions {
     fields?: EmbedField[];
 }
 
+export type ActivityTypeResolvable = ActivityType | string;
+
 export interface CoffeeClientOptions extends ClientOptions {
     config: Config;
-    
-    // TODO: Type the package.json?
-    package: any;
+    package: PackageJson;
 }
 
 export class CoffeeClient extends Client {
     config: Config;
-    package: any;
+    package: PackageJson;
 
     public constructor(options: CoffeeClientOptions) {
         super(options);

@@ -1,6 +1,6 @@
-import { ApplicationCommandData, ApplicationCommandType, CommandInteraction, codeBlock } from "discord.js";
+import { ApplicationCommandData, ApplicationCommandType, CommandInteraction, ActivityType, codeBlock } from "discord.js";
 import { client } from "..";
-import { Command } from "../def";
+import { ActivityTypeResolvable, Command } from "../def";
 import { createErrorEmbed } from "./embeds";
 
 export function convertToDiscordCommands(commands: Command[]) {
@@ -48,4 +48,27 @@ export async function logError(interaction: CommandInteraction, error: Error) {
     });
 
     logChannel?.isTextBased() && logChannel?.send({ embeds: [errorEmbed] });
+}
+
+export function resolveActivityType(type: ActivityTypeResolvable): number {
+    if (typeof type === "string") {
+        switch (type.toLowerCase()) {
+            case "playing":
+                return ActivityType.Playing;
+            case "streaming":
+                return ActivityType.Streaming;
+            case "listening":
+                return ActivityType.Listening;
+            case "watching":
+                return ActivityType.Watching;
+            case "custom":
+                return ActivityType.Custom;
+            case "competing":
+                return ActivityType.Competing;
+            default:
+                throw new Error(`Unknown activity type: ${type}`);
+        }
+    } else {
+        return type;
+    }
 }

@@ -1,4 +1,4 @@
-import { ActivityType, GatewayIntentBits } from "discord.js";
+import { GatewayIntentBits } from "discord.js";
 import { CoffeeClient } from "./def";
 import { getConfig } from "./lib/config";
 import { readFileSync } from "fs";
@@ -6,9 +6,10 @@ import { join } from "path";
 
 import commandHandler from "./handlers/command";
 import interactionHandler from "./handlers/interaction";
+import { resolveActivityType } from "./lib/common";
 
 export const client = new CoffeeClient({
-    intents: [GatewayIntentBits.Guilds],
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
     ws: { properties: { browser: "Discord Android" } }, 
     config: getConfig(),
     package: JSON.parse(readFileSync(join(__dirname, "../package.json"), "utf8"))
@@ -20,8 +21,7 @@ client.once("ready", async () => {
     await commandHandler();
     await interactionHandler();
 
-    // TODO: Allow defining the activity type
-    client.user?.setActivity(client.config.activity.name, { type: ActivityType.Competing });
+    client.user?.setActivity(client.config.activity.name, { type: resolveActivityType(client.config.activity.type) });
 
     console.log("Coffee is ready!");
 });
