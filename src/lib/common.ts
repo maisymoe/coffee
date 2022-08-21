@@ -1,7 +1,11 @@
+import { promisify } from "util";
+import { exec as _exec } from "child_process";
 import { ApplicationCommandData, ApplicationCommandType, CommandInteraction, ActivityType, codeBlock } from "discord.js";
 import { client } from "..";
 import { ActivityTypeResolvable, Command } from "../def";
 import { createErrorEmbed } from "./embeds";
+
+const exec = promisify(_exec);
 
 export function convertToDiscordCommands(commands: Command[]) {
     const convertedCommands = [];
@@ -71,4 +75,14 @@ export function resolveActivityType(type: ActivityTypeResolvable): number {
     } else {
         return type;
     }
+}
+
+export async function getGitInfo() {
+    const branch = (await exec("git rev-parse --abbrev-ref HEAD")).stdout.trim();
+    const commit = (await exec("git rev-parse HEAD")).stdout.trim();
+
+    return {
+        branch,
+        commit,
+    };
 }
