@@ -6,6 +6,7 @@ export interface CommandOptions {
     description: string;
     options?: ApplicationCommandOptionData[];
     su?: boolean;
+    noAck?: boolean;
     ephemeral?: boolean;
     handler: (interaction: ChatInputCommandInteraction) => Promise<void>;
 }
@@ -15,6 +16,7 @@ export class Command {
     public description: string;
     public options?: ApplicationCommandOptionData[];
     public su?: boolean;
+    public noAck?: boolean = false;
     public ephemeral?: boolean = false;
     public handler: (interaction: ChatInputCommandInteraction) => Promise<void>;
 
@@ -23,6 +25,7 @@ export class Command {
         this.description = co.description;
         this.options = co.options;
         this.su = co.su;
+        this.noAck = co.noAck;
         this.ephemeral = co.ephemeral;
         this.handler = co.handler;
     };
@@ -53,6 +56,7 @@ export interface ErrorEmbedOptions {
     title?: string;
     description?: string;
     fields?: EmbedField[];
+    footer?: EmbedFooterOptions;
 }
 
 export type ActivityTypeResolvable = ActivityType | string;
@@ -60,16 +64,19 @@ export type ActivityTypeResolvable = ActivityType | string;
 export interface CoffeeClientOptions extends ClientOptions {
     config: Config;
     package: PackageJson;
+    insults?: string[];
 }
 
 export class CoffeeClient extends Client {
     config: Config;
     package: PackageJson;
+    insults: string[];
 
     public constructor(options: CoffeeClientOptions) {
         super(options);
 
         this.config = options.config;
         this.package = options.package;
+        this.insults = options.insults || [];
     };
 }

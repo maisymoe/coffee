@@ -14,6 +14,7 @@
     "bugs": "https://github.com/Beefers/coffee/issues",
     "dependencies": {
         "discord.js": "^14.2.0",
+        "ohmyfetch": "^0.4.18",
         "valtio": "^1.6.4"
     },
     "devDependencies": {

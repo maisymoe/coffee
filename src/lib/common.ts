@@ -1,5 +1,6 @@
 import { promisify } from "util";
 import { exec as _exec } from "child_process";
+import { $fetch } from "ohmyfetch";
 import { ApplicationCommandData, ApplicationCommandType, CommandInteraction, ActivityType, codeBlock } from "discord.js";
 import { client } from "..";
 import { ActivityTypeResolvable, Command } from "../def";
@@ -85,4 +86,13 @@ export async function getGitInfo() {
         branch,
         commit,
     };
+}
+
+export async function getSudoInsults() {
+    try {
+        const insults = await $fetch("https://uwu.network/insults.txt/");
+        return insults.split("\n");   
+    } catch (error) {
+        return [];
+    }
 }

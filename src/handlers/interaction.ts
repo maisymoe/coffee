@@ -11,10 +11,18 @@ export default async function interactionHandler() {
 
         if (!command) { return } else {
             try {
-                await interaction.deferReply({ ephemeral: command.ephemeral });
+                if (!command.noAck) {
+                    await interaction.deferReply({ ephemeral: command.ephemeral });
+                }
 
                 if (command.su && !client.config.users.includes(interaction.user.id)) {
-                    await interaction.editReply({ content: "You do not have permission to use this command" });
+                    await interaction[command.noAck ? "reply" : "editReply"]({ embeds: [createErrorEmbed({ 
+                                description: `${interaction.user.username} is not in the sudoers file. This incident will be reported.`,
+                                footer: { text: client.insults[Math.floor(Math.random() * client.insults.length)]
+                            } 
+                        })],
+                        ephemeral: command.ephemeral
+                    });
                     return;
                 }
 

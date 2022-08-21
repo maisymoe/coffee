@@ -9,14 +9,23 @@ export default new Command({
     name: "eval",
     description: "Run JS in the bot context - for developers!",
     su: true,
-    options: [{
-        name: "code",
-        description: "The code to run (runs as a function!)",
-        required: true,
-        type: ApplicationCommandOptionType.String,
-    }],
+    noAck: true,
+    options: [
+        {
+            name: "code",
+            description: "The code to run (runs as a function!)",
+            required: true,
+            type: ApplicationCommandOptionType.String,
+        },
+        {
+            name: "silent",
+            description: "Don't send the output to the channel",
+            type: ApplicationCommandOptionType.Boolean,
+        }
+    ],
     handler: async (interaction) => {
         const code = interaction.options.getString("code", true);
+        const silent = interaction.options.getBoolean("silent");
         const before = Date.now();
 
         let took;
@@ -27,7 +36,7 @@ export default new Command({
             result = await (AsyncFunction("client", "interaction", code))(client, interaction);
             took = Date.now() - before;
 
-            embed = createGenericEmbed({ description: "Success!", color: "Green", fields: [
+            embed = createGenericEmbed({ color: "Green", fields: [
                     { name: "Time", value: `${took}ms`, inline: true },
                     { name: "Type", value: typeof result, inline: true },
                     { name: "Evaluated", value: codeBlock("js", code.substring(0, 1000)), inline: false },
@@ -40,7 +49,7 @@ export default new Command({
         } catch (error) {
             const typedError = error as Error;
 
-            embed = createErrorEmbed({ description: "Error...", fields: [
+            embed = createErrorEmbed({ fields: [
                     { name: "Evaluated", value: codeBlock("js", code.substring(0, 1000)), inline: false },
                     { name: "Error", value: codeBlock("js", (typedError.stack || typedError.message || typedError.toString()).substring(0, 1000)), inline: false },
                 ]
@@ -48,6 +57,6 @@ export default new Command({
                 
         }
 
-        await interaction.editReply({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed], ephemeral: silent ?? false });
     },
 })
