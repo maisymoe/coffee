@@ -44,7 +44,7 @@ export default new Command({
             });
 
             if (result !== undefined) {
-                embed.addFields([{ name: "Result", value: codeBlock("js", JSON.stringify(result).substring(0, 1000)), inline: false }]);
+                embed.addFields([{ name: "Result", value: codeBlock("js", JSON.stringify(result, null, 4).substring(0, 1000)), inline: false }]);
             }
         } catch (error) {
             const typedError = error as Error;
