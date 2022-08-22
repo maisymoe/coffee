@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Client, ClientOptions, ApplicationCommandOptionData, EmbedFooterOptions, ColorResolvable, EmbedField, ActivityType } from "discord.js";
+import { ChatInputCommandInteraction, Client, ClientOptions, ApplicationCommandOptionData, EmbedFooterOptions, ColorResolvable, EmbedField, ActivityType, Guild, User, TextChannel } from "discord.js";
 import { PackageJson } from "type-fest";
 
 export interface CommandOptions {
@@ -35,6 +35,7 @@ export interface Config {
     [index: string]: any;
     token: string;
     users: string[];
+    guild: string;
     channels: {
         log: string;
     }
@@ -66,8 +67,21 @@ export interface GitInfo {
     commit: string;
 }
 
+export interface Constants {
+    users: User[];
+    guild: Guild;
+    channels: {
+        log: TextChannel;
+    }
+    activity: {
+        name: string;
+        type: number;
+    }
+}
+
 export interface CoffeeClientOptions extends ClientOptions {
     config: Config;
+    constants?: Constants
     package: PackageJson;
     gitInfo?: GitInfo;
     insults?: string[];
@@ -75,6 +89,7 @@ export interface CoffeeClientOptions extends ClientOptions {
 
 export class CoffeeClient extends Client {
     config: Config;
+    constants?: Constants;
     package: PackageJson;
     gitInfo: GitInfo;
     insults: string[];
@@ -83,6 +98,7 @@ export class CoffeeClient extends Client {
         super(options);
 
         this.config = options.config;
+        this.constants = options.constants;
         this.package = options.package;
         this.insults = options.insults || [];
         this.gitInfo = options.gitInfo || {

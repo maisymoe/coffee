@@ -3,10 +3,11 @@ import { CoffeeClient } from "./def";
 import { getConfig } from "./lib/config";
 import { readFileSync } from "fs";
 import { join } from "path";
+import { getGitInfo, getSudoInsults } from "./lib/common";
 
 import commandHandler from "./handlers/command";
 import interactionHandler from "./handlers/interaction";
-import { getGitInfo, getSudoInsults, resolveActivityType } from "./lib/common";
+import getConstants from "./lib/constants";
 
 export const client = new CoffeeClient({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
@@ -19,13 +20,14 @@ export const client = new CoffeeClient({
 client.once("ready", async () => {
     console.log("Coffee is initialising...");
 
+    client.constants = await getConstants();
     client.gitInfo = await getGitInfo();
     client.insults = await getSudoInsults();
 
     await commandHandler();
     await interactionHandler();
 
-    client.user?.setActivity(client.config.activity.name, { type: resolveActivityType(client.config.activity.type) });
+    client.user?.setActivity(client.constants.activity);
 
     console.log("Coffee is ready!");
 });

@@ -1,7 +1,7 @@
 import { promisify } from "util";
 import { exec as _exec } from "child_process";
 import { $fetch } from "ohmyfetch";
-import { ApplicationCommandData, ApplicationCommandType, CommandInteraction, ActivityType, codeBlock } from "discord.js";
+import { ApplicationCommandData, ApplicationCommandType, CommandInteraction, ActivityType, UserFlagsString, codeBlock, inlineCode } from "discord.js";
 import { client } from "..";
 import { ActivityTypeResolvable, Command, GitInfo } from "../def";
 import { createErrorEmbed } from "./embeds";
@@ -25,8 +25,6 @@ export function convertToDiscordCommands(commands: Command[]) {
 
 export async function logError(interaction: CommandInteraction, error: Error) {
     console.error(error);
-
-    const logChannel = await client.channels.fetch(client.config.channels.log);
     const errorEmbed = createErrorEmbed({
         fields: [
             {
@@ -52,7 +50,7 @@ export async function logError(interaction: CommandInteraction, error: Error) {
         ],
     });
 
-    logChannel?.isTextBased() && logChannel?.send({ embeds: [errorEmbed] });
+    client.constants?.channels.log.send({ embeds: [errorEmbed] });
 }
 
 export function resolveActivityType(type: ActivityTypeResolvable): number {
@@ -95,4 +93,11 @@ export async function getSudoInsults() {
     } catch (error) {
         return [];
     }
+}
+
+export function getEmojiFromFlag(flag: UserFlagsString) {
+    console.log(flag);
+    const emoji = client.constants?.guild.emojis.cache.find(e => e.name === flag);
+
+    return emoji?.toString() ?? inlineCode(flag);
 }

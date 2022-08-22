@@ -69,7 +69,7 @@ export default new Command({
         const embed = createGenericEmbed({
             color: "Blurple",
             title: client.user?.username,
-            description: `${(await client.users.fetch(client.config.users[0])).toString()}'s Discord bot.`,
+            description: `${client.constants?.users[0].toString()}'s Discord bot.`,
             fields: generalFields,
             footer: { text: `${client.package.version} - Created with ❤️`}
         });
