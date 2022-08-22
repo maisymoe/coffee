@@ -11,6 +11,7 @@ import { getGitInfo, getSudoInsults, resolveActivityType } from "./lib/common";
 export const client = new CoffeeClient({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
     ws: { properties: { browser: "Discord Android" } }, 
+    allowedMentions: { parse: ["users"] },
     config: getConfig(),
     package: JSON.parse(readFileSync(join(__dirname, "../package.json"), "utf8"))
 });
