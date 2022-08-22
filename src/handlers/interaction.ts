@@ -30,10 +30,10 @@ export default async function interactionHandler() {
             } catch (error) {
                 const typedError = error as Error;
                 // Interaction is dead, no need to reply
-                if (typedError.message.includes("Unknown Interaction")) return;
+                if (typedError.message.toLowerCase().includes("unknown interaction")) return;
 
                 await logError(interaction, typedError);
-                await interaction.editReply({ embeds: [createErrorEmbed({ description: "I ran into an error running that command! I've reported it, and it should be fixed soon." })]});
+                await interaction[command.noAck ? "reply" : "editReply"]({ embeds: [createErrorEmbed({ description: "I ran into an error running that command! I've reported it, and it should be fixed soon." })]});
             }
         }
     })
