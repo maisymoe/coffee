@@ -3,7 +3,7 @@ import { exec as _exec } from "child_process";
 import { $fetch } from "ohmyfetch";
 import { ApplicationCommandData, ApplicationCommandType, CommandInteraction, ActivityType, codeBlock } from "discord.js";
 import { client } from "..";
-import { ActivityTypeResolvable, Command } from "../def";
+import { ActivityTypeResolvable, Command, GitInfo } from "../def";
 import { createErrorEmbed } from "./embeds";
 
 const exec = promisify(_exec);
@@ -78,7 +78,7 @@ export function resolveActivityType(type: ActivityTypeResolvable): number {
     }
 }
 
-export async function getGitInfo() {
+export async function getGitInfo(): Promise<GitInfo> {
     const branch = (await exec("git rev-parse --abbrev-ref HEAD")).stdout.trim();
     const commit = (await exec("git rev-parse HEAD")).stdout.trim();
 

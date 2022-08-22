@@ -1,8 +1,7 @@
-import { ApplicationCommandOptionType, hyperlink, time, TimestampStyles } from "discord.js";
+import { ApplicationCommandOptionType, time, TimestampStyles } from "discord.js";
 import { client } from "../..";
 import { Command } from "../../def";
 import { createGenericEmbed } from "../../lib/embeds";
-import { getGitInfo } from "../../lib/common";
 import os from "os";
 
 export default new Command({
@@ -19,7 +18,6 @@ export default new Command({
         const totalMemRaw = os.totalmem() / 1048576; // 1024*1024
         const totalMem = totalMemRaw >= 1024 ? `${(totalMemRaw / 1024).toFixed()}GB` : `${totalMemRaw.toFixed()}MB`;
         const memoryUsage = memoryUsageRaw >= 1024 ? `${(memoryUsageRaw / 1024).toFixed()}GB` : `${memoryUsageRaw.toFixed()}MB`;
-        const gitInfo = await getGitInfo();
         
         const generalFields = [
             { name: "User", value: client.user!.toString(), inline: true },
@@ -62,8 +60,8 @@ export default new Command({
             {
                 name: "Git",
                 value: `
-                    **Commit**: ${gitInfo.commit.slice(0, 7)}
-                    **Branch**: ${gitInfo.branch}
+                    **Commit**: ${client.gitInfo.commit.slice(0, 7)}
+                    **Branch**: ${client.gitInfo.branch}
                 `,
             }
         ]

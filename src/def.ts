@@ -61,15 +61,22 @@ export interface ErrorEmbedOptions {
 
 export type ActivityTypeResolvable = ActivityType | string;
 
+export interface GitInfo {
+    branch: string;
+    commit: string;
+}
+
 export interface CoffeeClientOptions extends ClientOptions {
     config: Config;
     package: PackageJson;
+    gitInfo?: GitInfo;
     insults?: string[];
 }
 
 export class CoffeeClient extends Client {
     config: Config;
     package: PackageJson;
+    gitInfo: GitInfo;
     insults: string[];
 
     public constructor(options: CoffeeClientOptions) {
@@ -78,5 +85,9 @@ export class CoffeeClient extends Client {
         this.config = options.config;
         this.package = options.package;
         this.insults = options.insults || [];
+        this.gitInfo = options.gitInfo || {
+            branch: "unknown",
+            commit: "unknown",
+        };
     };
 }

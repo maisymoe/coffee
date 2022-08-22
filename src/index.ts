@@ -6,7 +6,7 @@ import { join } from "path";
 
 import commandHandler from "./handlers/command";
 import interactionHandler from "./handlers/interaction";
-import { getSudoInsults, resolveActivityType } from "./lib/common";
+import { getGitInfo, getSudoInsults, resolveActivityType } from "./lib/common";
 
 export const client = new CoffeeClient({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
@@ -18,6 +18,7 @@ export const client = new CoffeeClient({
 client.once("ready", async () => {
     console.log("Coffee is initialising...");
 
+    client.gitInfo = await getGitInfo();
     client.insults = await getSudoInsults();
 
     await commandHandler();
