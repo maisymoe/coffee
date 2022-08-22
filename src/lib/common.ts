@@ -96,7 +96,6 @@ export async function getSudoInsults() {
 }
 
 export function getEmojiFromFlag(flag: UserFlagsString) {
-    console.log(flag);
     const emoji = client.constants?.guild.emojis.cache.find(e => e.name === flag);
 
     return emoji?.toString() ?? inlineCode(flag);
