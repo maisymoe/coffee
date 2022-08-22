@@ -33,7 +33,7 @@ export default new Command({
         let embed;
 
         try {
-            result = await (AsyncFunction("client", "interaction", code))(client, interaction);
+            result = await (AsyncFunction("client", "interaction", "require", code))(client, interaction, require);
             took = Date.now() - before;
 
             embed = createGenericEmbed({ color: "Green", fields: [
