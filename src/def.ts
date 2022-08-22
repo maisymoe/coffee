@@ -1,5 +1,8 @@
-import { ChatInputCommandInteraction, Client, ClientOptions, ApplicationCommandOptionData, EmbedFooterOptions, ColorResolvable, EmbedField, ActivityType, Guild, User, TextChannel } from "discord.js";
+import { ChatInputCommandInteraction, Client, ClientOptions, ApplicationCommandOptionData, EmbedFooterOptions, ColorResolvable, EmbedField, ActivityType, Guild, User, TextChannel, TextBasedChannel } from "discord.js";
 import { PackageJson } from "type-fest";
+import { libBasic, Value, VM } from "cumlisp";
+import { installCoffee } from "./lib/lisp/libCoffee";
+import { installDiscord } from "./lib/lisp/libDiscord";
 
 export interface CommandOptions {
     name: string;
@@ -79,10 +82,35 @@ export interface Constants {
     }
 }
 
+export type Indexable = {
+    [index: string]: any;
+}
+
+export type IndexablePackageJson = PackageJson & Indexable;
+
+export interface DiscordVMContext {
+    client: CoffeeClient;
+    interaction: ChatInputCommandInteraction;
+    channel: TextBasedChannel;
+    author: User;
+    args: Value[];
+}
+
+export class CoffeeVM extends VM {
+    public readonly context: DiscordVMContext;
+    public constructor(context: DiscordVMContext) {
+        super();
+        this.context = context;
+        libBasic.installBasic(this);
+        installCoffee(this, context);
+        installDiscord(this, context);
+    }
+}
+
 export interface CoffeeClientOptions extends ClientOptions {
     config: Config;
     constants?: Constants
-    package: PackageJson;
+    package: IndexablePackageJson;
     gitInfo?: GitInfo;
     insults?: string[];
 }
@@ -90,7 +118,7 @@ export interface CoffeeClientOptions extends ClientOptions {
 export class CoffeeClient extends Client {
     config: Config;
     constants?: Constants;
-    package: PackageJson;
+    package: IndexablePackageJson;
     gitInfo: GitInfo;
     insults: string[];
 
