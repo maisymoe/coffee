@@ -91,7 +91,7 @@ export async function getSudoInsults() {
         const insults = await $fetch("https://uwu.network/insults.txt/");
         return insults.split("\n");   
     } catch (error) {
-        return [];
+        return ["There would be an insult here, but it couldn't be fetched."];
     }
 }
 
