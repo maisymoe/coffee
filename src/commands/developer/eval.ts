@@ -32,6 +32,8 @@ export default new Command({
         let result;
         let embed;
 
+        await interaction.deferReply({ ephemeral: silent ?? false });
+
         try {
             result = await (AsyncFunction("client", "interaction", "require", code))(client, interaction, require);
             took = Date.now() - before;
@@ -57,6 +59,6 @@ export default new Command({
                 
         }
 
-        await interaction.reply({ embeds: [embed], ephemeral: silent ?? false });
+        await interaction.editReply({ embeds: [embed] });
     },
 })
