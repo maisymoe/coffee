@@ -1,19 +1,20 @@
 import { ApplicationCommandOptionType, codeBlock, cleanCodeBlockContent } from "discord.js";
-import { client } from "../..";
+import { exec } from "child_process";
+import { promisify } from "util";
 import { Command } from "../../def";
 import { createGenericEmbed, createErrorEmbed } from "../../lib/embeds";
 
-const AsyncFunction = (async function () {}).constructor;
+const execPromise = promisify(exec);
 
 export default new Command({
-    name: "eval",
-    description: "Run JS in the bot context - for developers!",
+    name: "exec",
+    description: "Run a command in the bot's shell - for developers!",
     su: true,
     noAck: true,
     options: [
         {
-            name: "code",
-            description: "The code to run (runs as a function!)",
+            name: "command",
+            description: "The command to run",
             required: true,
             type: ApplicationCommandOptionType.String,
         },
@@ -24,36 +25,38 @@ export default new Command({
         }
     ],
     handler: async (interaction) => {
-        const code = interaction.options.getString("code", true);
+        const command = interaction.options.getString("command", true);
         const silent = interaction.options.getBoolean("silent");
         const before = Date.now();
 
         let took;
-        let result;
         let embed;
 
         await interaction.deferReply({ ephemeral: silent ?? false });
 
         try {
-            result = await (AsyncFunction("client", "interaction", "require", code))(client, interaction, require);
+            const { stdout, stderr } = await execPromise(command);
             took = Date.now() - before;
 
             embed = createGenericEmbed({ color: "Green", fields: [
                     { name: "Time", value: `${took}ms`, inline: true },
-                    { name: "Type", value: typeof result, inline: true },
-                    { name: "Evaluated", value: codeBlock("js", cleanCodeBlockContent(code.substring(0, 1000))), inline: false },
+                    { name: "Stdin", value: codeBlock("ansi", cleanCodeBlockContent(command.substring(0, 1000))), inline: false },
                 ]
             });
 
-            if (result !== undefined) {
-                embed.addFields([{ name: "Result", value: codeBlock("js", cleanCodeBlockContent(JSON.stringify(result, null, 4).substring(0, 1000))), inline: false }]);
+            if (stdout) {
+                embed.addFields([{ name: "Stdout", value: codeBlock("ansi", cleanCodeBlockContent(stdout.substring(0, 1000))), inline: false }]);
+            }
+
+            if (stderr) {
+                embed.addFields([{ name: "Stderr", value: codeBlock("ansi", cleanCodeBlockContent(stderr.substring(0, 1000))), inline: false }]);
             }
         } catch (error) {
             const typedError = error as Error;
 
             embed = createErrorEmbed({ fields: [
-                    { name: "Evaluated", value: codeBlock("js", code.substring(0, 1000)), inline: false },
-                    { name: "Error", value: codeBlock("js", cleanCodeBlockContent((typedError.stack || typedError.message || typedError.toString()).substring(0, 1000))), inline: false },
+                    { name: "Stdin", value: codeBlock("ansi", cleanCodeBlockContent(command.substring(0, 1000))), inline: false },
+                    { name: "Error", value: codeBlock("ansi", cleanCodeBlockContent(typedError.toString().trim().substring(0, 1000))), inline: false },
                 ]
             });
                 

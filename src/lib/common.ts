@@ -1,7 +1,7 @@
 import { promisify } from "util";
 import { exec as _exec } from "child_process";
 import { $fetch } from "ohmyfetch";
-import { ApplicationCommandData, ApplicationCommandType, ChatInputCommandInteraction, ActivityType, UserFlagsString, TextBasedChannel, codeBlock, inlineCode, Guild, GuildMember, MessageMentions, Channel, GuildChannel } from "discord.js";
+import { ApplicationCommandData, ApplicationCommandType, ChatInputCommandInteraction, ActivityType, UserFlagsString, TextBasedChannel, codeBlock, inlineCode, Guild, GuildMember, MessageMentions, Channel, GuildChannel, cleanCodeBlockContent } from "discord.js";
 import { client } from "..";
 import { ActivityTypeResolvable, Command, GitInfo, DiscordVMContext, Indexable } from "../def";
 import { createErrorEmbed } from "./embeds";
@@ -44,7 +44,7 @@ export async function logError(interaction: ChatInputCommandInteraction, error: 
             },
             {
                 name: "Error",
-                value: codeBlock("js", (error.stack || error.message || error.toString()).substring(0, 1000)),
+                value: codeBlock("js", cleanCodeBlockContent((error.stack || error.message || error.toString()).substring(0, 1000))),
                 inline: false,
             }
         ],
