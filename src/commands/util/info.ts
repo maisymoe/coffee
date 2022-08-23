@@ -42,29 +42,23 @@ export default new Command({
             }
         ];
 
-        const hardwareFields = [
-            {
-                name: "Hardware",
-                value: `
-                    **Platform**: ${process.platform}
-                    **Architecture**: ${process.arch}
-                    **CPU**: ${os.cpus()[0].model}
-                    **CPU Cores**: ${os.cpus().length}
-                    **CPU Speed**: ${os.cpus()[0].speed}MHz
-                    **RAM Usage**: ${memoryUsage}/${totalMem}
-                `,
-            }
+        const hardwareItems = [
+            { name: "Platform", value: process.platform },
+            { name: "Architecture", value: process.arch },
+            { name: "CPU", value: os.cpus()[0].model.trim() },
+            { name: "CPU Cores", value: os.cpus().length },
+            { name: "CPU Speed", value: `${os.cpus()[0].speed}MHz` },
+            { name: "RAM Usage", value: `${memoryUsage}/${totalMem}` },
         ];
 
-        const gitFields = [
-            {
-                name: "Git",
-                value: `
-                    **Commit**: ${client.gitInfo.commit.slice(0, 7)}
-                    **Branch**: ${client.gitInfo.branch}
-                `,
-            }
+        const hardwareFields = [{ name: "Hardware", value: hardwareItems.map(o => `**${o.name}**: ${o.value.toString()}`).join("\n"), inline: false }];
+
+        const gitItems = [
+            { name: "Commit", value: client.gitInfo.commit.slice(0, 7) },
+            { name: "Branch", value: client.gitInfo.branch },
         ]
+
+        const gitFields = [{ name: "Git", value: gitItems.map(o => `**${o.name}**: ${o.value.toString()}`).join("\n"), inline: false }];
 
         const embed = createGenericEmbed({
             color: "Blurple",
