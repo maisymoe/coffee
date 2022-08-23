@@ -10,7 +10,7 @@ import interactionHandler from "./handlers/interaction";
 import getConstants from "./lib/constants";
 
 export const client = new CoffeeClient({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+    intents: [GatewayIntentBits.Guilds],
     ws: { properties: { browser: "Discord Android" } }, 
     allowedMentions: { parse: ["users"] },
     config: getConfig(),
