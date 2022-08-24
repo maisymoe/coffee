@@ -1,9 +1,6 @@
-import { ApplicationCommandOptionType, codeBlock, cleanCodeBlockContent } from "discord.js";
-import { client } from "../..";
+import { ApplicationCommandOptionType } from "discord.js";
 import { Command } from "../../def";
 import { createGenericEmbed, createErrorEmbed } from "../../lib/embeds";
-
-const AsyncFunction = (async function () {}).constructor;
 
 export default new Command({
     name: "dm",
