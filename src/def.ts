@@ -119,8 +119,8 @@ export class CoffeeClient extends Client {
     config: Config;
     constants?: Constants;
     package: IndexablePackageJson;
-    gitInfo: GitInfo;
-    insults: string[];
+    gitInfo?: GitInfo;
+    insults?: string[];
 
     public constructor(options: CoffeeClientOptions) {
         super(options);

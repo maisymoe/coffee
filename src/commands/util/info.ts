@@ -54,11 +54,11 @@ export default new Command({
         const hardwareFields = [{ name: "Hardware", value: hardwareItems.map(o => `**${o.name}**: ${o.value.toString()}`).join("\n"), inline: false }];
 
         const gitItems = [
-            { name: "Commit", value: client.gitInfo.commit.slice(0, 7) },
-            { name: "Branch", value: client.gitInfo.branch },
+            { name: "Commit", value: client.gitInfo?.commit.slice(0, 7) },
+            { name: "Branch", value: client.gitInfo?.branch },
         ]
 
-        const gitFields = [{ name: "Git", value: gitItems.map(o => `**${o.name}**: ${o.value.toString()}`).join("\n"), inline: false }];
+        const gitFields = [{ name: "Git", value: gitItems.map(o => `**${o.name}**: ${o.value?.toString()}`).join("\n"), inline: false }];
 
         const embed = createGenericEmbed({
             color: "Blurple",

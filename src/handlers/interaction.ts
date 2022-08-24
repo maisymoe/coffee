@@ -18,7 +18,7 @@ export default async function interactionHandler() {
                 if (command.su && !client.config.users.includes(interaction.user.id)) {
                     await interaction[command.noAck ? "reply" : "editReply"]({ embeds: [createErrorEmbed({ 
                                 description: `${interaction.user.username} is not in the sudoers file. This incident will be reported.`,
-                                footer: { text: client.insults[Math.floor(Math.random() * client.insults.length)]
+                                footer: { text: client.insults![Math.floor(Math.random() * client.insults!.length)]
                             } 
                         })],
                         ephemeral: command.ephemeral
