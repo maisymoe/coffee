@@ -1,3 +1,5 @@
+# THIS BRANCH IS UNMAINTAINED, SEE THE `hyper` BRANCH
+
 # Coffee
 
 Beef's personal Discord bot, but rewritten.
