@@ -6,6 +6,10 @@ import { commands } from "./command";
 export default async function interactionHandler() {
     client.on("interactionCreate", async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
+        if (client.config.blacklist.includes(interaction.user.id)) {
+            interaction.reply({ embeds: [createErrorEmbed({ description: "You have been blacklisted from Coffee." })] });
+            return;
+        }
 
         const command = commands.find(i => i.name === interaction.commandName);
 

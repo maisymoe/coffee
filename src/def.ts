@@ -37,6 +37,7 @@ export class Command {
 export interface Config {
     [index: string]: any;
     token: string;
+    blacklist: string[];
     users: string[];
     guild: string;
     channels: {
