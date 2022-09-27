@@ -1,5 +1,5 @@
-import { VM, Value, wrapFunc, asString } from "cumlisp";
 import { GuildMember } from "discord.js";
+import { VM, Value, wrapFunc, asString } from "cumlisp";
 import { DiscordVMContext, Indexable } from "../../def";
 import { findMemberByReference, guildOfChannel, queryClosestEmoteName } from "./utils";
 

@@ -1,6 +1,6 @@
+import { inlineCode } from "discord.js";
 import { VM, Value, wrapFunc, asString } from "cumlisp";
 import { DiscordVMContext, Indexable } from "../../def";
-import { inlineCode } from "discord.js";
 import { client } from "../..";
 
 const availableKeys = ["name", "version", "description", "author", "license", "respository", "bugs"];

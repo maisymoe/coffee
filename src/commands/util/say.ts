@@ -1,5 +1,5 @@
-import { run } from "cumlisp";
 import { ApplicationCommandOptionType, inlineCode } from "discord.js";
+import { run } from "cumlisp";
 import { CoffeeVM, Command } from "../../def";
 import { getVMContext } from "../../lib/lisp/utils";
 import { createStatusEmbed } from "../../lib/embeds";

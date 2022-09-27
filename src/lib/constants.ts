@@ -1,11 +1,11 @@
 import { TextChannel, ActivityType } from "discord.js";
-import { client } from "..";
-import { Constants, GitInfo, ActivityTypeResolvable } from "../def";
 import { promisify } from "util";
 import { exec as _exec } from "child_process";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { $fetch } from "ohmyfetch";
+import { client } from "..";
+import { Constants, GitInfo, ActivityTypeResolvable } from "../def";
 
 const exec = promisify(_exec);
 
