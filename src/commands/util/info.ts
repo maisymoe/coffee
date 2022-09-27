@@ -30,14 +30,14 @@ export default new Command({
 
         const softwareFields = [
             { name: "Node", value: process.version.substring(1), inline: true },
-            { name: "TypeScript", value: client.package.devDependencies!["typescript"]!.substring(1), inline: true },
-            { name: "Discord.JS", value: client.package.dependencies!["discord.js"]!.substring(1), inline: true },
+            { name: "TypeScript", value: client.constants?.package.devDependencies!["typescript"]!.substring(1)!, inline: true },
+            { name: "Discord.JS", value: client.constants?.package.dependencies!["discord.js"]!.substring(1)!, inline: true },
         ]
 
         const detailedSoftwareFields = [
             { 
                 name: "Software",
-                value: Object.entries({ node: process.version, ...client.package.dependencies, ...client.package.devDependencies }).map(([name, version]) => `**${name}**: ${version.startsWith("^") ? version.substring(1) : version}`).join("\n"),
+                value: Object.entries({ node: process.version, ...client.constants?.package.dependencies, ...client.constants?.package.devDependencies }).map(([name, version]) => `**${name}**: ${version.startsWith("^") ? version.substring(1) : version}`).join("\n"),
                 inline: false 
             }
         ];
@@ -54,8 +54,8 @@ export default new Command({
         const hardwareFields = [{ name: "Hardware", value: hardwareItems.map(o => `**${o.name}**: ${o.value.toString()}`).join("\n"), inline: false }];
 
         const gitItems = [
-            { name: "Commit", value: client.gitInfo?.commit.slice(0, 7) },
-            { name: "Branch", value: client.gitInfo?.branch },
+            { name: "Commit", value: client.constants?.gitInfo.commit.slice(0, 7) },
+            { name: "Branch", value: client.constants?.gitInfo.branch },
         ]
 
         const gitFields = [{ name: "Git", value: gitItems.map(o => `**${o.name}**: ${o.value?.toString()}`).join("\n"), inline: false }];
@@ -65,10 +65,10 @@ export default new Command({
             title: client.user?.username,
             description: `${client.constants?.users[0].toString()}'s Discord bot.`,
             fields: generalFields,
-            footer: { text: `${client.package.version} - Created with ❤️`}
+            footer: { text: `${client.constants?.package.version} - Created with ❤️`}
         });
 
-        embed.setURL(client.package.repository!.toString());
+        embed.setURL(client.constants?.package.repository?.toString()!);
 
         if (detailed) { 
             embed.addFields([ ...detailedSoftwareFields, ...gitFields, ...hardwareFields ]);

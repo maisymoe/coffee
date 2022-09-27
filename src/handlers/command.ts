@@ -1,10 +1,10 @@
+import { ApplicationCommandType, ApplicationCommandData } from "discord.js";
 import { readdir } from "fs/promises";
 import { join } from "path";
 import { client } from "..";
-
 import { Command } from "../def";
-import { convertToDiscordCommands } from "../lib/common";
 
+export const convertToDiscordCommands = (commands: Command[]): ApplicationCommandData[] => commands.map(c => ({ name: c.name, description: c.description, options: c.options, type: ApplicationCommandType.ChatInput }));
 export const commands = new Array<Command>();
 
 export default async function commandHandler() {

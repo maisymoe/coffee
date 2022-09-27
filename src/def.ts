@@ -67,6 +67,12 @@ export interface GitInfo {
     commit: string;
 }
 
+export type Indexable = {
+    [index: string]: any;
+}
+
+export type IndexablePackageJson = PackageJson & Indexable;
+
 export interface Constants {
     users: User[];
     guild: Guild;
@@ -77,13 +83,10 @@ export interface Constants {
         name: string;
         type: number;
     }
+    package: IndexablePackageJson,
+    gitInfo: GitInfo,
+    insults: string[],
 }
-
-export type Indexable = {
-    [index: string]: any;
-}
-
-export type IndexablePackageJson = PackageJson & Indexable;
 
 export interface DiscordVMContext {
     client: CoffeeClient;
@@ -107,28 +110,16 @@ export class CoffeeVM extends VM {
 export interface CoffeeClientOptions extends ClientOptions {
     config: Config;
     constants?: Constants
-    package: IndexablePackageJson;
-    gitInfo?: GitInfo;
-    insults?: string[];
 }
 
 export class CoffeeClient extends Client {
     config: Config;
-    constants?: Constants;
-    package: IndexablePackageJson;
-    gitInfo?: GitInfo;
-    insults?: string[];
+    constants?: Constants;;
 
     public constructor(options: CoffeeClientOptions) {
         super(options);
 
         this.config = options.config;
         this.constants = options.constants;
-        this.package = options.package;
-        this.insults = options.insults || [];
-        this.gitInfo = options.gitInfo || {
-            branch: "unknown",
-            commit: "unknown",
-        };
     };
 }

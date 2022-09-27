@@ -1,8 +1,16 @@
-import { ApplicationCommandOptionType, time, TimestampStyles } from "discord.js";
+import { ApplicationCommandOptionType, TimestampStyles, UserFlagsString, time, inlineCode } from "discord.js";
 import { client } from "../..";
 import { Command } from "../../def";
-import { getEmojiFromFlag } from "../../lib/common";
 import { createStatusEmbed } from "../../lib/embeds";
+
+export function getEmojiFromFlag(flag: UserFlagsString) {
+    const emojiCache = client.constants?.guild.emojis.cache;
+    const emoji = emojiCache?.find(e => e.name === flag);
+
+    if (flag === "VerifiedBot") return `${emojiCache?.find(e => e.name === "VerifiedBot1")}${emojiCache?.find(e => e.name === "VerifiedBot2")}`;
+
+    return emoji?.toString() ?? inlineCode(flag);
+}
 
 export default new Command({
     name: "user",

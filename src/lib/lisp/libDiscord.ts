@@ -1,7 +1,7 @@
 import { VM, Value, wrapFunc, asString } from "cumlisp";
 import { GuildMember } from "discord.js";
 import { DiscordVMContext, Indexable } from "../../def";
-import { findMemberByReference, guildOfChannel, queryClosestEmoteName } from "../common";
+import { findMemberByReference, guildOfChannel, queryClosestEmoteName } from "./utils";
 
 const allowedTypes = ["string", "number"];
 

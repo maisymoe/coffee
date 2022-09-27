@@ -1,7 +1,11 @@
+import { ChatInputCommandInteraction, InteractionReplyOptions } from "discord.js";
 import { client } from "..";
-import { logError, safeReply } from "../lib/common";
+import { logError } from "../lib/errors";
 import { createStatusEmbed } from "../lib/embeds";
 import { commands } from "./command";
+import { Command } from "../def";
+
+export const safeReply = async (command: Command, interaction: ChatInputCommandInteraction, reply: InteractionReplyOptions) => await interaction[command.noAck ? "reply" : "editReply"](reply);
 
 export default async function interactionHandler() {
     client.on("interactionCreate", async (interaction) => {
@@ -29,7 +33,7 @@ export default async function interactionHandler() {
                     embeds: [createStatusEmbed({
                         type: "warn",
                         description: `${interaction.user.username} is not in the sudoers file. This incident will be reported.`, 
-                        footer: { text: client.insults![Math.floor(Math.random() * client.insults!.length)] },
+                        footer: { text: client.constants!.insults![Math.floor(Math.random() * client.constants!.insults!.length)] },
                     })],
                     ephemeral: command.ephemeral
                 });

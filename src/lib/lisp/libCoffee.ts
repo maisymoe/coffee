@@ -11,14 +11,14 @@ export function installCoffee(vm: VM, context: DiscordVMContext) {
             const name = asString(args[0]);
 
             if (availableKeys.includes(name)) {
-                return client.package[name];
+                return client.constants?.package[name];
             } else {
                 throw new Error(`No data for ${inlineCode(name)} in package.json.`)
             }
         }),
         "dependency": wrapFunc("dependency", 1, async (args: Value[]): Promise<Value> => {
             const name = asString(args[0]);
-            const mergedDeps: Indexable = { ...client.package.dependencies, ...client.package.devDependencies };
+            const mergedDeps: Indexable = { ...client.constants?.package.dependencies, ...client.constants?.package.devDependencies };
 
             if (name in mergedDeps) {
                 return mergedDeps[name];
