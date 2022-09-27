@@ -2,7 +2,7 @@ import { run } from "cumlisp";
 import { ApplicationCommandOptionType, inlineCode } from "discord.js";
 import { CoffeeVM, Command } from "../../def";
 import { getVMContext } from "../../lib/common";
-import { createErrorEmbed } from "../../lib/embeds";
+import { createStatusEmbed } from "../../lib/embeds";
 
 export default new Command({
     name: "say",
@@ -27,7 +27,8 @@ export default new Command({
             const typedError = error as Error;
             result = { 
                 embeds: [
-                    createErrorEmbed({
+                    createStatusEmbed({
+                        type: "error",
                         description: inlineCode(typedError.message),
                         footer: { text: "Is your LISP correct?" }
                     }),

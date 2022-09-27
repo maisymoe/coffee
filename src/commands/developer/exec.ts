@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType, codeBlock, cleanCodeBlockContent } from "
 import { exec } from "child_process";
 import { promisify } from "util";
 import { Command } from "../../def";
-import { createGenericEmbed, createErrorEmbed } from "../../lib/embeds";
+import { createStatusEmbed } from "../../lib/embeds";
 
 const execPromise = promisify(exec);
 
@@ -38,7 +38,9 @@ export default new Command({
             const { stdout, stderr } = await execPromise(command);
             took = Date.now() - before;
 
-            embed = createGenericEmbed({ color: "Green", fields: [
+            embed = createStatusEmbed({
+                type: "success", 
+                fields: [
                     { name: "Time", value: `${took}ms`, inline: true },
                     { name: "Stdin", value: codeBlock("ansi", cleanCodeBlockContent(command.substring(0, 1000))), inline: false },
                 ]
@@ -54,7 +56,9 @@ export default new Command({
         } catch (error) {
             const typedError = error as Error;
 
-            embed = createErrorEmbed({ fields: [
+            embed = createStatusEmbed({
+                type: "error",
+                fields: [
                     { name: "Stdin", value: codeBlock("ansi", cleanCodeBlockContent(command.substring(0, 1000))), inline: false },
                     { name: "Error", value: codeBlock("ansi", cleanCodeBlockContent(typedError.toString().trim().substring(0, 1000))), inline: false },
                 ]

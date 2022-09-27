@@ -49,19 +49,15 @@ export interface Config {
     };
 }
 
-export interface GenericEmbedOptions {
-    title?: string;
-    description?: string;
-    fields?: EmbedField[];
-    footer?: EmbedFooterOptions;
-    color: ColorResolvable;
-}
+export type StatusEmbedType = "info" | "success" | "warn" | "error";
 
-export interface ErrorEmbedOptions {
-    title?: string;
-    description?: string;
-    fields?: EmbedField[];
-    footer?: EmbedFooterOptions;
+export interface StatusEmbedOptions {
+    type: StatusEmbedType,
+    title?: string,
+    description?: string,
+    fields?: EmbedField[],
+    footer?: EmbedFooterOptions,
+    color?: ColorResolvable,
 }
 
 export type ActivityTypeResolvable = ActivityType | string;

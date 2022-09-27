@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, inlineCode } from "discord.js";
 import { v3 } from "murmurhash";
 import { Command } from "../../def";
-import { createGenericEmbed, createErrorEmbed } from "../../lib/embeds";
+import { createStatusEmbed } from "../../lib/embeds";
 
 export default new Command({
     name: "experiment",
@@ -27,8 +27,8 @@ export default new Command({
         const key = `${experiment}:${user.id}`;
         const hash = v3(key);
 
-        const embed = createGenericEmbed({
-            color: "Green",
+        const embed = createStatusEmbed({
+            type: "success",
             fields: [
                 { name: "Experiment", value: inlineCode(experiment), inline: false },
                 { name: "User", value: user.toString(), inline: true },

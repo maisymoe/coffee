@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType } from "discord.js";
 import { client } from "../..";
 import { Command } from "../../def";
-import { createGenericEmbed, createErrorEmbed } from "../../lib/embeds";
+import { createStatusEmbed } from "../../lib/embeds";
 
 export default new Command({
     name: "blacklist",
@@ -38,17 +38,30 @@ export default new Command({
 
         if (type === "add") {
             if (client.config.blacklist.includes(user.id)) { 
-                embed = createErrorEmbed({ description: `${user.toString()} is already in the blacklist!`});
+                embed = createStatusEmbed({
+                    type: "error",
+                    description: `${user.toString()} is already in the blacklist!`
+                });
             } else {
                 client.config.blacklist.push(user.id);
-                embed = createGenericEmbed({ color: "Green", description: `${user.toString()} was added to the blacklist.`, footer: { text: "L" } });
+                embed = createStatusEmbed({
+                    type: "success",
+                    description: `${user.toString()} was added to the blacklist.`,
+                    footer: { text: "L" },
+                });
             };
         } else {
             if (!client.config.blacklist.includes(user.id)) { 
-                embed = createErrorEmbed({ description: `${user.toString()} is not in the blacklist!`});
+                embed = createStatusEmbed({
+                    type: "error",
+                    description: `${user.toString()} is not in the blacklist!`
+                });
             } else {
                 client.config.blacklist.splice(client.config.blacklist.indexOf(user.id));
-                embed = createGenericEmbed({ color: "Green", description: `${user.toString()} was removed from the blacklist.` });
+                embed = createStatusEmbed({
+                    type: "success",
+                    description: `${user.toString()} was removed from the blacklist.`
+                });
             };
         }
 

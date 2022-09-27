@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType, time, TimestampStyles } from "discord.js"
 import { client } from "../..";
 import { Command } from "../../def";
 import { getEmojiFromFlag } from "../../lib/common";
-import { createGenericEmbed } from "../../lib/embeds";
+import { createStatusEmbed } from "../../lib/embeds";
 
 export default new Command({
     name: "user",
@@ -39,7 +39,8 @@ export default new Command({
             generalFields.push({ name: "Joined", value: time(member.joinedAt!, TimestampStyles.LongDateTime), inline: false });
         }
 
-        const embed = createGenericEmbed({ 
+        const embed = createStatusEmbed({
+            type: "info",
             color: member?.roles.highest.color || user.accentColor || "Blurple",
             title: user.tag,
             fields: [

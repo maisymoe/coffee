@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, time, TimestampStyles } from "discord.js";
 import { client } from "../..";
 import { Command } from "../../def";
-import { createGenericEmbed } from "../../lib/embeds";
+import { createStatusEmbed } from "../../lib/embeds";
 import os from "os";
 
 export default new Command({
@@ -60,8 +60,8 @@ export default new Command({
 
         const gitFields = [{ name: "Git", value: gitItems.map(o => `**${o.name}**: ${o.value?.toString()}`).join("\n"), inline: false }];
 
-        const embed = createGenericEmbed({
-            color: "Blurple",
+        const embed = createStatusEmbed({
+            type: "info",
             title: client.user?.username,
             description: `${client.constants?.users[0].toString()}'s Discord bot.`,
             fields: generalFields,

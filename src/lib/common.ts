@@ -1,10 +1,10 @@
 import { promisify } from "util";
 import { exec as _exec } from "child_process";
 import { $fetch } from "ohmyfetch";
-import { ApplicationCommandData, ApplicationCommandType, ChatInputCommandInteraction, ActivityType, UserFlagsString, TextBasedChannel, codeBlock, inlineCode, Guild, GuildMember, MessageMentions, Channel, GuildChannel, cleanCodeBlockContent } from "discord.js";
+import { ApplicationCommandData, ApplicationCommandType, ChatInputCommandInteraction, ActivityType, UserFlagsString, TextBasedChannel, codeBlock, inlineCode, Guild, GuildMember, MessageMentions, Channel, GuildChannel, cleanCodeBlockContent, InteractionReplyOptions } from "discord.js";
 import { client } from "..";
 import { ActivityTypeResolvable, Command, GitInfo, DiscordVMContext, Indexable } from "../def";
-import { createErrorEmbed } from "./embeds";
+import { createStatusEmbed } from "./embeds";
 
 const exec = promisify(_exec);
 
@@ -25,7 +25,8 @@ export function convertToDiscordCommands(commands: Command[]) {
 
 export async function logError(interaction: ChatInputCommandInteraction, error: Error) {
     console.error(error);
-    const errorEmbed = createErrorEmbed({
+    const errorEmbed = createStatusEmbed({
+        type: "error",
         fields: [
             {
                 name: "Command",
@@ -113,6 +114,8 @@ export function getVMContext(interaction: ChatInputCommandInteraction): DiscordV
         args: []
     }
 }
+
+export const safeReply = async (command: Command, interaction: ChatInputCommandInteraction, reply: InteractionReplyOptions) => await interaction[command.noAck ? "reply" : "editReply"](reply);
 
 // Copyright (C) 2019-2020 CCDirectLink members
 //

@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType } from "discord.js";
 import { Command } from "../../def";
-import { createGenericEmbed, createErrorEmbed } from "../../lib/embeds";
+import { createStatusEmbed } from "../../lib/embeds";
 
 export default new Command({
     name: "dm",
@@ -35,9 +35,15 @@ export default new Command({
 
         try {
             await user.send({ content: content, files: attachment ? [attachment] : undefined });
-            embed = createGenericEmbed({ color: "Green", description: `${user.toString()} was message successfully!` })
+            embed = createStatusEmbed({
+                type: "success",
+                description: `${user.toString()} was messaged successfully!`,
+            });
         } catch {
-            embed = createErrorEmbed({ description: `${user.toString()} could not be messaged.` })
+            embed = createStatusEmbed({
+                type: "error",
+                description: `${user.toString()} could not be messaged.`,
+            })
         }
 
         await interaction.editReply({ embeds: [embed] });
