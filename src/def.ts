@@ -73,6 +73,11 @@ export type Indexable = {
 
 export type IndexablePackageJson = PackageJson & Indexable;
 
+export interface Tag {
+    name: string;
+    value: string;
+}
+
 export interface Constants {
     users: User[];
     guild: Guild;
@@ -86,6 +91,7 @@ export interface Constants {
     package: IndexablePackageJson,
     gitInfo: GitInfo,
     insults: string[],
+    tags: Tag[],
 }
 
 export interface DiscordVMContext {
@@ -109,12 +115,12 @@ export class CoffeeVM extends VM {
 
 export interface CoffeeClientOptions extends ClientOptions {
     config: Config;
-    constants?: Constants
+    constants?: Constants;
 }
 
 export class CoffeeClient extends Client {
     config: Config;
-    constants?: Constants;;
+    constants?: Constants;
 
     public constructor(options: CoffeeClientOptions) {
         super(options);

@@ -6,6 +6,7 @@ import { join } from "path";
 import { $fetch } from "ohmyfetch";
 import { client } from "..";
 import { Constants, GitInfo, ActivityTypeResolvable } from "../def";
+import { setupDataLink } from "./data";
 
 const exec = promisify(_exec);
 
@@ -69,5 +70,6 @@ export default async function getConstants(): Promise<Constants> {
         package: JSON.parse(readFileSync(join(__dirname, "../", "../", "package.json"), "utf8")),
         gitInfo: await getGitInfo(),
         insults: await getSudoInsults(),
+        tags: setupDataLink("tags"),
     }
 }
