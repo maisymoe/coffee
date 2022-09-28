@@ -31,7 +31,7 @@ export default async function interactionHandler() {
             if (command.su && !client.config.users.includes(interaction.user.id)) {
                 await safeReply(command, interaction, { 
                     embeds: [createStatusEmbed({
-                        type: "warn",
+                        type: "error",
                         description: `${interaction.user.username} is not in the sudoers file. This incident will be reported.`, 
                         footer: { text: client.constants!.insults![Math.floor(Math.random() * client.constants!.insults!.length)] },
                     })],
