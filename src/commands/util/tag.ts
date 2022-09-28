@@ -100,7 +100,19 @@ export default new Command({
 
         switch(command) {
             case "get":
-                await interaction.editReply((await run(existingTag!.response, new CoffeeVM(getVMContext(interaction)))).substring(0, 2000));
+                try {
+                    await interaction.editReply((await run(existingTag!.response, new CoffeeVM(getVMContext(interaction)))).substring(0, 2000));
+                } catch(error) {
+                    const typedError = error as Error;
+                    await interaction.editReply({
+                        embeds: [
+                            createStatusEmbed({
+                                type: "error",
+                                description: `LISP error in tag ${inlineCode(existingTag!.name)}: ${inlineCode(typedError.message)}`,
+                            }),
+                        ],
+                    });
+                }
             break;
             case "create":
                 if (existingTag) { 
