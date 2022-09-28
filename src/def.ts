@@ -75,7 +75,8 @@ export type IndexablePackageJson = PackageJson & Indexable;
 
 export interface Tag {
     name: string;
-    value: string;
+    response: string;
+    guildId: string;
 }
 
 export interface Constants {

@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { proxy, subscribe } from "valtio/vanilla";
 
-export function setupDataLink(file: string) {
+export function setupDataLink(file: string, pretty?: boolean) {
     const dataFile = join(__dirname, "../", "../", "data", `${file}.json`);
     let parsedData;
 
@@ -15,7 +15,7 @@ export function setupDataLink(file: string) {
     const config = proxy(parsedData);
     subscribe(config, () => {
         try {
-            writeFileSync(dataFile, JSON.stringify(config, null, 4));
+            writeFileSync(dataFile, JSON.stringify(config, null, pretty ? 4 : 0));
         } catch (e) {
             throw new Error(`Could not write data file at ${dataFile}`);
         }

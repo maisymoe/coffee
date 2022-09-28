@@ -11,7 +11,7 @@ export const client = new CoffeeClient({
     intents: [GatewayIntentBits.Guilds],
     ws: { properties: { browser: "Discord Android" } }, 
     allowedMentions: { parse: ["users"] },
-    config: setupDataLink("config"),
+    config: setupDataLink("config", true),
 });
 
 client.once("ready", async () => {
