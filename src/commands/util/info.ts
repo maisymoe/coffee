@@ -37,7 +37,7 @@ export default new Command({
         const detailedSoftwareFields = [
             { 
                 name: "Software",
-                value: Object.entries({ node: process.version, ...client.constants?.package.dependencies, ...client.constants?.package.devDependencies }).map(([name, version]) => `**${name}**: ${version.startsWith("^") ? version.substring(1) : version}`).join("\n"),
+                value: Object.entries({ node: process.version, ...client.constants?.package.dependencies, ...client.constants?.package.devDependencies }).map(([name, version]) => `**${name}**: ${version.startsWith("^") || version.startsWith("v") ? version.substring(1) : version}`).join("\n"),
                 inline: false 
             }
         ];
