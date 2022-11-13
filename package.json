@@ -19,6 +19,7 @@
         "erlpack": "github:discord/erlpack",
         "murmurhash": "^2.0.1",
         "ohmyfetch": "^0.4.19",
+        "strupt": "1.0.3-2",
         "utf-8-validate": "^5.0.9",
         "valtio": "^1.7.0",
         "zlib-sync": "^0.1.7"
