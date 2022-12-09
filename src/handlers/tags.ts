@@ -1,8 +1,4 @@
-import { ChatInputCommandInteraction, InteractionReplyOptions } from "discord.js";
 import { client } from "..";
-import { Command } from "../def";
-
-export const safeReply = async (command: Command, interaction: ChatInputCommandInteraction, reply: InteractionReplyOptions) => await interaction[command.noAck ? "reply" : "editReply"](reply);
 
 export default async function tagsHandler() {
     client.on("interactionCreate", async (interaction) => {
