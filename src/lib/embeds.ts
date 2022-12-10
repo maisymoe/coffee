@@ -1,4 +1,5 @@
 import { resolveColor, EmbedBuilder, ColorResolvable } from "discord.js";
+import { client } from "..";
 import { StatusEmbedOptions } from "../def";
 
 export function createStatusEmbed({ type, title, description, fields, footer, color }: StatusEmbedOptions): EmbedBuilder {
@@ -7,16 +8,16 @@ export function createStatusEmbed({ type, title, description, fields, footer, co
     if (!color) {
         switch(type) {
             case "info":
-                colorFromType = "Blurple";
+                colorFromType = client.constants!.palette.accent;
             break;
             case "success":
-                colorFromType = "Green";
+                colorFromType = client.constants!.palette.success;
             break;
             case "warn":
-                colorFromType = "Yellow";
+                colorFromType = client.constants!.palette.warn;
             break;
             case "error":
-                colorFromType = "Red";
+                colorFromType = client.constants!.palette.error;
             break;
         }
     } else {

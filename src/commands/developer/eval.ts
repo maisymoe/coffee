@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, codeBlock, cleanCodeBlockContent } from "discord.js";
 import { client } from "../..";
 import { Command } from "../../def";
-import { createStatusEmbed} from "../../lib/embeds";
+import { createStatusEmbed } from "../../lib/embeds";
 
 const AsyncFunction = (async function () {}).constructor;
 
@@ -60,7 +60,7 @@ export default new Command({
             });
         }
 
-        if (JSON.stringify(result, null, 4).includes(client.config.token) && !silent) {
+        if (JSON.stringify(result, null, 4)?.includes(client.config.token) && !silent) {
             await interaction.editReply({
                 embeds: [
                     createStatusEmbed({

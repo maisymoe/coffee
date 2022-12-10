@@ -49,7 +49,7 @@ export default new Command({
 
         const embed = createStatusEmbed({
             type: "info",
-            color: member?.roles.highest.color || user.accentColor || "Blurple",
+            color: member?.roles.highest.color || user.accentColor || client.constants!.palette.accent,
             title: user.tag,
             fields: [
                 ...generalFields,

@@ -112,10 +112,16 @@ export interface Constants {
         name: string;
         type: number;
     }
-    package: IndexablePackageJson,
-    gitInfo: GitInfo,
-    insults: string[],
-    tags: Tag[],
+    package: IndexablePackageJson;
+    gitInfo: GitInfo;
+    insults: string[];
+    tags: Tag[];
+    palette: {
+        accent: ColorResolvable,
+        error: ColorResolvable,
+        warn: ColorResolvable,
+        success: ColorResolvable
+    }
 }
 
 export interface DiscordVMContext {

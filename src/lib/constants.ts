@@ -71,5 +71,11 @@ export default async function getConstants(): Promise<Constants> {
         gitInfo: await getGitInfo(),
         insults: await getSudoInsults(),
         tags: setupDataLink("tags"),
+        palette: {
+            accent: "#6494AA",
+            error: "#A63D40",
+            warn: "#E19C3D",
+            success: "#90A959"
+        }
     }
 }
