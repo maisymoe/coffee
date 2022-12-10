@@ -58,9 +58,20 @@ export default new Command({
                     { name: "Error", value: codeBlock("js", cleanCodeBlockContent((typedError.stack || typedError.message || typedError.toString()).substring(0, 1000))), inline: false },
                 ]
             });
-                
         }
 
-        await interaction.editReply({ embeds: [embed] });
+        if (JSON.stringify(result, null, 4).includes(client.config.token) && !silent) {
+            await interaction.editReply({
+                embeds: [
+                    createStatusEmbed({
+                        type: "warn",
+                        description: "The result was hidden because it contained the bot token."
+                    }),
+                ],
+            });
+            await interaction.followUp({ embeds: [embed], ephemeral: true });
+        } else {
+            await interaction.editReply({ embeds: [embed] });
+        }
     },
 })
