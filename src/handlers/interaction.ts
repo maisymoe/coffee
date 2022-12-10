@@ -49,7 +49,10 @@ export default async function interactionHandler() {
         } catch (error) {
             const typedError = error as Error;
             // Interaction is dead, no need to reply
-            if (typedError.message.toLowerCase().includes("unknown interaction")) return;
+            if (typedError.message.toLowerCase().includes("unknown interaction")) {
+                await logError(interaction, undefined, "An interaction failed...");
+                return;
+            };
 
             await logError(interaction, typedError);
             await safeReply(command, interaction, {
