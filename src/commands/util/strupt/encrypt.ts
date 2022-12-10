@@ -26,10 +26,17 @@ export default new Subcommand({
             required: true,
             type: ApplicationCommandOptionType.Boolean,
         },
+        {
+            name: "silent",
+            description: "Whether to send the output to the channel",
+            type: ApplicationCommandOptionType.Boolean,
+        },
     ],
     handler: async (interaction) => {
-        const givenString = interaction.options.getString("string", true);
+        const silent = interaction.options.getBoolean("silent");
+        await interaction.deferReply({ ephemeral: silent ?? false });
 
+        const givenString = interaction.options.getString("string", true);
         const words = interaction.options.getBoolean("words", true);
         const emojis = interaction.options.getBoolean("emojis", true);
         let encrypted;

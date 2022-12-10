@@ -19,20 +19,20 @@ export default new Command({
         },
         {
             name: "silent",
-            description: "Don't send the output to the channel",
+            description: "Whether to the output to the channel",
             type: ApplicationCommandOptionType.Boolean,
         }
     ],
     handler: async (interaction) => {
-        const code = interaction.options.getString("code", true);
         const silent = interaction.options.getBoolean("silent");
+        await interaction.deferReply({ ephemeral: silent ?? false });
+
+        const code = interaction.options.getString("code", true);
         const before = Date.now();
 
         let took;
         let result;
         let embed;
-
-        await interaction.deferReply({ ephemeral: silent ?? false });
 
         try {
             result = await (AsyncFunction("client", "interaction", "require", code))(client, interaction, require);

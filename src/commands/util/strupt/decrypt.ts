@@ -20,8 +20,16 @@ export default new Subcommand({
             required: true,
             type: ApplicationCommandOptionType.Attachment,
         },
+        {
+            name: "silent",
+            description: "Whether to send the output to the channel",
+            type: ApplicationCommandOptionType.Boolean,
+        },
     ],
     handler: async (interaction) => {
+        const silent = interaction.options.getBoolean("silent");
+        await interaction.deferReply({ ephemeral: silent ?? false });
+        
         const givenString = interaction.options.getString("string", true);
         const keyAttachment = interaction.options.getAttachment("key", true);
         const rawKey = await $fetch(keyAttachment.url).catch(r => interaction.editReply({ embeds: [
