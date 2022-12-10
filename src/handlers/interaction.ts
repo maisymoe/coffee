@@ -3,7 +3,7 @@ import { client } from "..";
 import { logError } from "../lib/errors";
 import { createStatusEmbed } from "../lib/embeds";
 import { commands } from "./command";
-import { Command } from "../def";
+import { Command, CommandHandlerFunction } from "../def";
 
 export const safeReply = async (command: Command, interaction: ChatInputCommandInteraction, reply: InteractionReplyOptions) => await interaction[command.noAck ? "reply" : "editReply"](reply);
 
@@ -11,7 +11,7 @@ export default async function interactionHandler() {
     client.on("interactionCreate", async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
         if (client.config.blacklist.includes(interaction.user.id)) {
-            interaction.reply({ 
+            interaction.reply({
                 embeds: [
                     createStatusEmbed({
                         type: "error",
@@ -40,7 +40,12 @@ export default async function interactionHandler() {
                 return;
             }
 
-            await command.handler(interaction);
+            if (command.handler instanceof Function) { 
+                await command.handler(interaction);
+            } else {
+                const subcommand = command.handler.find(i => i.name === interaction.options.getSubcommand(true));
+                await subcommand!.handler(interaction);
+            }
         } catch (error) {
             const typedError = error as Error;
             // Interaction is dead, no need to reply

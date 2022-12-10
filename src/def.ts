@@ -4,6 +4,8 @@ import { libBasic, Value, VM } from "cumlisp";
 import { installCoffee } from "./lib/lisp/libCoffee";
 import { installDiscord } from "./lib/lisp/libDiscord";
 
+export type CommandHandlerFunction = (interaction: ChatInputCommandInteraction) => Promise<void>;
+
 export interface CommandOptions {
     name: string;
     description: string;
@@ -11,7 +13,7 @@ export interface CommandOptions {
     su?: boolean;
     noAck?: boolean;
     ephemeral?: boolean;
-    handler: (interaction: ChatInputCommandInteraction) => Promise<void>;
+    handler: CommandHandlerFunction | Subcommand[];
 }
 
 export class Command {
@@ -21,7 +23,7 @@ export class Command {
     public su?: boolean;
     public noAck?: boolean = false;
     public ephemeral?: boolean = false;
-    public handler: (interaction: ChatInputCommandInteraction) => Promise<void>;
+    public handler: CommandHandlerFunction | Subcommand[];
 
     public constructor(co: CommandOptions) {
         this.name = co.name;
@@ -30,6 +32,27 @@ export class Command {
         this.su = co.su;
         this.noAck = co.noAck;
         this.ephemeral = co.ephemeral;
+        this.handler = co.handler;
+    };
+}
+
+export interface SubcommandOptions {
+    name: string;
+    description: string;
+    options?: ApplicationCommandOptionData[];
+    handler: CommandHandlerFunction;
+}
+
+export class Subcommand {
+    public name: string;
+    public description: string;
+    public options?: ApplicationCommandOptionData[];
+    public handler: CommandHandlerFunction;
+
+    public constructor(co: SubcommandOptions) {
+        this.name = co.name;
+        this.description = co.description;
+        this.options = co.options;
         this.handler = co.handler;
     };
 }
