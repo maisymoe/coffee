@@ -22,7 +22,7 @@ client.once("ready", async () => {
     await interactionHandler();
     await tagsHandler();
 
-    client.user?.setActivity(client.constants.activity);
+    setInterval(() => client.user?.setActivity(client.constants?.activity), 900000);
 
     console.log("Coffee is ready!");
 });
