@@ -117,10 +117,10 @@ export interface Constants {
     insults: string[];
     tags: Tag[];
     palette: {
-        accent: ColorResolvable,
-        error: ColorResolvable,
-        warn: ColorResolvable,
-        success: ColorResolvable
+        accent: ColorResolvable;
+        error: ColorResolvable;
+        warn: ColorResolvable;
+        success: ColorResolvable;
     }
 }
 
