@@ -3,7 +3,7 @@ import { client } from "..";
 import { logError } from "../lib/errors";
 import { createStatusEmbed } from "../lib/embeds";
 import { commands } from "./command";
-import { Command, CommandHandlerFunction } from "../def";
+import { Command } from "../def";
 
 export const safeReply = async (command: Command, interaction: ChatInputCommandInteraction, reply: InteractionReplyOptions) => await interaction[command.noAck ? "reply" : "editReply"](reply);
 

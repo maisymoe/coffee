@@ -1,19 +1,17 @@
-import { GuildMember } from "discord.js";
+import { User } from "discord.js";
 import { VM, Value, wrapFunc, asString } from "cumlisp";
 import { DiscordVMContext, Indexable } from "../../def";
-import { findMemberByReference, guildOfChannel, queryClosestEmoteName } from "./utils";
+import { findUserByReference, guildOfChannel, queryClosestEmoteName } from "./utils";
 
 const allowedTypes = ["string", "number"];
 
-// TODO: Merge member and user object somehow so LISP users can get user-specific properties
-
-function getMemberKey(member: GuildMember & Indexable | null | undefined, key: string) {
+function getMemberKey(member: User & Indexable | null | undefined, key: string) {
     if (!member) throw new Error(`Unable to find user ${member}`);
 
     const foundProp = member[key];
 
     if (typeof foundProp === "undefined") {
-        throw new Error(`Property ${key} is undefined.`);
+        throw new Error(`Property ${key} is undefined`);
     }
 
     if (!allowedTypes.includes(typeof foundProp)) throw new Error(`Property ${key} is not one of ${allowedTypes.join(", ")}`);
@@ -27,23 +25,22 @@ export function installDiscord(vm: VM, context: DiscordVMContext) {
             vm.consumeTime(128);
 
             const guild = guildOfChannel(context.channel);
-            const member: GuildMember & Indexable | null | undefined = await findMemberByReference(guild, asString(args[0]));
+            const user: User & Indexable | null | undefined = await findUserByReference(asString(args[0]), guild);
 
-            return getMemberKey(member, asString(args[1]));
+            return getMemberKey(user, asString(args[1]));
         }),
         "author": wrapFunc("author", 1, async (args: Value[]): Promise<Value> => {
             vm.consumeTime(128);
+            
+            const user: User & Indexable | null | undefined = context.author;
 
-            const guild = guildOfChannel(context.channel);
-            const member: GuildMember & Indexable | null | undefined = await findMemberByReference(guild, context.author.id);
-
-            return getMemberKey(member, asString(args[0]));
+            return getMemberKey(user, asString(args[0]));
         }),
         "emote": wrapFunc("emote", 1, async (args: Value[]): Promise<Value> => {
             const name = asString(args[0]);
             const emote = queryClosestEmoteName(name)?.toString();
 
-            if (!emote) throw new Error(`No emote with name ${name} could be found.`)
+            if (!emote) throw new Error(`No emote with name ${name} could be found.`);
 
             return emote;
         })

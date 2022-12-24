@@ -1,6 +1,6 @@
 {
     "name": "coffee",
-    "version": "1.4.0-hyperdrive",
+    "version": "1.4.1-hyperdrive",
     "description": "Beef's Discord bot.",
     "main": "dist/index.js",
     "scripts": {

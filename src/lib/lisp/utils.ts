@@ -1,4 +1,4 @@
-import { Channel, GuildChannel, Guild, GuildMember, MessageMentions, TextBasedChannel, ChatInputCommandInteraction } from "discord.js";
+import { Channel, GuildChannel, Guild, GuildMember, MessageMentions, TextBasedChannel, ChatInputCommandInteraction, User } from "discord.js";
 import { Indexable, DiscordVMContext } from "../../def";
 import { client } from "../..";
 
@@ -33,27 +33,30 @@ export function guildOfChannel(channel: Channel): Guild | undefined {
     return channel instanceof GuildChannel ? channel.guild : undefined;
 }
 
-export async function findMemberByReference(guild: Guild | undefined | null, reference: string): Promise<GuildMember | undefined | null> {
+export async function findUserByReference(reference: string, guild?: Guild): Promise<User | undefined | null> {
     const mention = MessageMentions.UsersPattern.exec(reference);
-    if (mention) return await guild?.members.fetch(mention[1]);
+    if (mention) return await client.users.fetch(mention[1]);
 
-    let byId: GuildMember | undefined | null;
+    let byId: User | undefined | null;
     try {
-        byId = await guild?.members.fetch(reference);
-    } catch {};
+        byId = await client.users.fetch(reference);
+    } catch {}
     if (byId) return byId;
 
-    // const candidates = Array.from((await guild?.members.fetch())!.filter((cand: GuildMember) => {
-    //     return (
-    //         cand.user.username.includes(reference) ||
-    //         reference == cand.user.tag ||
-    //         reference == cand.user.id ||
-    //         reference == cand.nickname
-    //     )
-    // }).values())
+    if (guild) {
+        const byGuildQuery = await guild?.members.fetch({ query: reference, limit: 1 });
+        if (byGuildQuery?.first()) return byGuildQuery?.first()?.user;
+    }
 
-    const byQuery = await guild?.members.fetch({ query: reference, limit: 1 });
-    if (byQuery?.first) return byQuery?.first();
+    const candidates = Array.from((await client.users.cache)!.filter((cand: User) => {
+        return (
+            cand.username.includes(reference) ||
+            reference == cand.tag ||
+            reference == cand.id
+        )
+    }).values())
+
+    if (candidates.length !== 0) return candidates[0];
 
     return null;
 }

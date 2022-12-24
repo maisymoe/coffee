@@ -13,7 +13,7 @@ export function installCoffee(vm: VM, context: DiscordVMContext) {
             if (availableKeys.includes(name)) {
                 return client.constants?.package[name];
             } else {
-                throw new Error(`No data for ${inlineCode(name)} in package.json.`)
+                throw new Error(`No data for ${inlineCode(name)} in package.json`);
             }
         }),
         "dependency": wrapFunc("dependency", 1, async (args: Value[]): Promise<Value> => {
@@ -23,7 +23,7 @@ export function installCoffee(vm: VM, context: DiscordVMContext) {
             if (name in mergedDeps) {
                 return mergedDeps[name];
             } else {
-                throw new Error(`Dependency ${inlineCode(name)} not found.`)
+                throw new Error(`Dependency ${inlineCode(name)} not found`);
             }
         })
     })
