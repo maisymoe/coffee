@@ -3,7 +3,7 @@ import { createStatusEmbed } from "./embeds";
 import { client } from "../";
 
 export async function logError(interaction: ChatInputCommandInteraction, error?: Error, message?: string) {
-    console.error(error);
+    error && console.error(error);
     const errorEmbed = createStatusEmbed({
         type: error ? "error" : "warn",
         fields: [
