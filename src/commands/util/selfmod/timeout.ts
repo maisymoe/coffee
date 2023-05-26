@@ -51,16 +51,9 @@ export default new Subcommand({
       cache: false,
     });
 
-    member
-      .timeout(
-        options.for,
-        `${
-          options.reason ? "No reason specified" : options.reason
-        } (/selfmod timeout)`
-      )
+    member.timeout(options.for, `${options.reason ? "No reason specified" : options.reason} (/selfmod timeout)`)
       .then(() =>
-        interaction
-          .editReply({
+        interaction.editReply({
             embeds: [
               createStatusEmbed({
                 type: "success",
@@ -71,10 +64,7 @@ export default new Subcommand({
             ],
           })
           .catch(console.error)
-      )
-      .catch((e) =>
-        interaction
-          .editReply({
+      ).catch((e) => interaction.editReply({
             embeds: [
               createStatusEmbed({
                 type: "error",
