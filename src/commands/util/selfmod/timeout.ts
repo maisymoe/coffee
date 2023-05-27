@@ -50,8 +50,8 @@ export default new Subcommand({
       user: interaction.user,
       cache: false,
     });
-
-    member.timeout(options.for, `${options.reason ? "No reason specified" : options.reason} (/selfmod timeout)`)
+		const timeoutUntil = interaction.createdTimestamp + (options.for * 1000);
+    member.disableCommunicationUntil(timeoutUntil, `${options.reason ? "No reason specified" : options.reason} (/selfmod timeout)`)
       .then(() =>
         interaction.editReply({
             embeds: [
@@ -59,7 +59,7 @@ export default new Subcommand({
                 type: "success",
                 description:
                   `Successfully timed you out.\n` +
-                  `See you <t:${options.for}:R>`,
+                  `See you <t:${Math.round(timeoutUntil/1000)}:R>`,
               }),
             ],
           })
