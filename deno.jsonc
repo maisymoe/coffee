@@ -1,0 +1,8 @@
+{
+    "imports": {
+        "coffeelib": "./packages/lib/src/index.ts"
+    },
+    "tasks": {
+        "dev": "deno run --allow-all --watch ./packages/bot/src/index.ts"
+    }
+}
