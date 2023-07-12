@@ -7,5 +7,6 @@ export const DJS = {
     REST,
     WebSocketManager,
 }
-
 export * as Discord from "npm:discord-api-types/v10";
+
+export { join, dirname, toFileUrl } from "https://deno.land/std@0.193.0/path/mod.ts";
