@@ -3,7 +3,7 @@ import { CoffeeClient } from "../client.ts";
 
 type CommandCallback = (interaction: Discord.APIInteraction, api: typeof DJS.API.prototype) => void | Promise<void>;
 
-interface ICommand {
+export interface ICommand {
     name: string;
     description: string;
     options?: Discord.APIApplicationCommandOption[];
@@ -69,7 +69,7 @@ export async function setupCommandHandler({ api }: CoffeeClient, commandsPath: s
                 .filter(i => commandFilter(i) && i.name !== "meta.ts");
             
             const subcommandData: Subcommand[] = await Promise.all(subcommandFiles.map(async file => ({
-                ...(await import(join(commandsPath, categoryDir.name, subcommandDir.name, file.name))).default,
+                ...(await import(toFileString(join(commandsPath, categoryDir.name, subcommandDir.name, file.name)))).default,
             })));
 
             const metaFile: ICommand = (await import(toFileString(join(commandsPath, categoryDir.name, subcommandDir.name, "meta.ts")))).default;
@@ -87,7 +87,7 @@ export async function setupCommandHandler({ api }: CoffeeClient, commandsPath: s
         }
 
         for (const commandFile of commandFiles) {
-            const command = (await import(toFileString(join(commandsPath, categoryDir.name, commandFile.name)).toString())).default;
+            const command = (await import(toFileString(join(commandsPath, categoryDir.name, commandFile.name)))).default;
             commands.push(command);
         }
     }

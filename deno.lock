@@ -16,6 +16,7 @@
   "npm": {
     "specifiers": {
       "@discordjs/core": "@discordjs/core@0.6.0",
+      "@discordjs/formatters": "@discordjs/formatters@0.3.1",
       "@discordjs/rest": "@discordjs/rest@1.7.1",
       "@discordjs/ws": "@discordjs/ws@0.8.3",
       "discord-api-types": "discord-api-types@0.37.48",
@@ -35,6 +36,12 @@
           "@discordjs/ws": "@discordjs/ws@0.8.3",
           "@sapphire/snowflake": "@sapphire/snowflake@3.5.1",
           "@vladfrangu/async_event_emitter": "@vladfrangu/async_event_emitter@2.2.2",
+          "discord-api-types": "discord-api-types@0.37.48"
+        }
+      },
+      "@discordjs/formatters@0.3.1": {
+        "integrity": "sha512-M7X4IGiSeh4znwcRGcs+49B5tBkNDn4k5bmhxJDAUhRxRHTiFAOTVUNQ6yAKySu5jZTnCbSvTYHW3w0rAzV1MA==",
+        "dependencies": {
           "discord-api-types": "discord-api-types@0.37.48"
         }
       },

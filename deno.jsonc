@@ -1,4 +1,9 @@
 {
+    "lint": {
+        "rules": {
+            "exclude": ["require-await"]
+        }
+    },
     "imports": {
         "coffeelib": "./packages/lib/src/index.ts"
     },
